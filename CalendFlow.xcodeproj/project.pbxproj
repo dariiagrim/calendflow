@@ -8,17 +8,34 @@
 
 /* Begin PBXBuildFile section */
 		949E25CA2BEF9D2C00406B08 /* CalendFlowApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949E25C92BEF9D2C00406B08 /* CalendFlowApp.swift */; };
-		949E25CC2BEF9D2C00406B08 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949E25CB2BEF9D2C00406B08 /* ContentView.swift */; };
 		949E25CE2BEF9D2D00406B08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 949E25CD2BEF9D2D00406B08 /* Assets.xcassets */; };
 		949E25D12BEF9D2D00406B08 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 949E25D02BEF9D2D00406B08 /* Preview Assets.xcassets */; };
+		949E25D82BEF9D7600406B08 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949E25D72BEF9D7600406B08 /* MainView.swift */; };
+		949E25DB2BEF9D9B00406B08 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949E25DA2BEF9D9B00406B08 /* MainViewModel.swift */; };
+		949E25DF2BEFA58400406B08 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949E25DE2BEFA58400406B08 /* SignInView.swift */; };
+		949E25E12BEFA59700406B08 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949E25E02BEFA59700406B08 /* SignInViewModel.swift */; };
+		949E25E42BEFC32800406B08 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 949E25E32BEFC32800406B08 /* GoogleSignIn */; };
+		949E25E62BEFC32800406B08 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 949E25E52BEFC32800406B08 /* GoogleSignInSwift */; };
+		949E25EA2BEFC8B200406B08 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949E25E92BEFC8B200406B08 /* UIApplication+.swift */; };
+		949E25EE2BEFCECF00406B08 /* TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949E25ED2BEFCECF00406B08 /* TokenStorage.swift */; };
+		949E25F32BEFD6D600406B08 /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949E25F22BEFD6D600406B08 /* ScheduleView.swift */; };
+		949E25F52BEFD6EA00406B08 /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949E25F42BEFD6EA00406B08 /* ScheduleViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		949E25C62BEF9D2C00406B08 /* CalendFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CalendFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		949E25C92BEF9D2C00406B08 /* CalendFlowApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendFlowApp.swift; sourceTree = "<group>"; };
-		949E25CB2BEF9D2C00406B08 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		949E25CD2BEF9D2D00406B08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		949E25D02BEF9D2D00406B08 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		949E25D72BEF9D7600406B08 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		949E25DA2BEF9D9B00406B08 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		949E25DE2BEFA58400406B08 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		949E25E02BEFA59700406B08 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
+		949E25E72BEFC6E800406B08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		949E25E92BEFC8B200406B08 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
+		949E25ED2BEFCECF00406B08 /* TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStorage.swift; sourceTree = "<group>"; };
+		949E25F22BEFD6D600406B08 /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
+		949E25F42BEFD6EA00406B08 /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,6 +43,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				949E25E42BEFC32800406B08 /* GoogleSignIn in Frameworks */,
+				949E25E62BEFC32800406B08 /* GoogleSignInSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,8 +70,13 @@
 		949E25C82BEF9D2C00406B08 /* CalendFlow */ = {
 			isa = PBXGroup;
 			children = (
+				949E25EC2BEFCEB600406B08 /* Storages */,
+				949E25E82BEFC89A00406B08 /* Extensions */,
+				949E25E72BEFC6E800406B08 /* Info.plist */,
 				949E25C92BEF9D2C00406B08 /* CalendFlowApp.swift */,
-				949E25CB2BEF9D2C00406B08 /* ContentView.swift */,
+				949E25EF2BEFD69B00406B08 /* Schedule */,
+				949E25DD2BEFA54D00406B08 /* SignIn */,
+				949E25D92BEF9D9100406B08 /* Main */,
 				949E25CD2BEF9D2D00406B08 /* Assets.xcassets */,
 				949E25CF2BEF9D2D00406B08 /* Preview Content */,
 			);
@@ -65,6 +89,49 @@
 				949E25D02BEF9D2D00406B08 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		949E25D92BEF9D9100406B08 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				949E25D72BEF9D7600406B08 /* MainView.swift */,
+				949E25DA2BEF9D9B00406B08 /* MainViewModel.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		949E25DD2BEFA54D00406B08 /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+				949E25DE2BEFA58400406B08 /* SignInView.swift */,
+				949E25E02BEFA59700406B08 /* SignInViewModel.swift */,
+			);
+			path = SignIn;
+			sourceTree = "<group>";
+		};
+		949E25E82BEFC89A00406B08 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				949E25E92BEFC8B200406B08 /* UIApplication+.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		949E25EC2BEFCEB600406B08 /* Storages */ = {
+			isa = PBXGroup;
+			children = (
+				949E25ED2BEFCECF00406B08 /* TokenStorage.swift */,
+			);
+			path = Storages;
+			sourceTree = "<group>";
+		};
+		949E25EF2BEFD69B00406B08 /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				949E25F22BEFD6D600406B08 /* ScheduleView.swift */,
+				949E25F42BEFD6EA00406B08 /* ScheduleViewModel.swift */,
+			);
+			path = Schedule;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +150,10 @@
 			dependencies = (
 			);
 			name = CalendFlow;
+			packageProductDependencies = (
+				949E25E32BEFC32800406B08 /* GoogleSignIn */,
+				949E25E52BEFC32800406B08 /* GoogleSignInSwift */,
+			);
 			productName = CalendFlow;
 			productReference = 949E25C62BEF9D2C00406B08 /* CalendFlow.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +182,10 @@
 				Base,
 			);
 			mainGroup = 949E25BD2BEF9D2C00406B08;
+			packageReferences = (
+				949E25E22BEFC32800406B08 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				949E25EB2BEFCBB600406B08 /* XCRemoteSwiftPackageReference "google-api-objectivec-client-for-rest" */,
+			);
 			productRefGroup = 949E25C72BEF9D2C00406B08 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -137,8 +212,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				949E25CC2BEF9D2C00406B08 /* ContentView.swift in Sources */,
 				949E25CA2BEF9D2C00406B08 /* CalendFlowApp.swift in Sources */,
+				949E25D82BEF9D7600406B08 /* MainView.swift in Sources */,
+				949E25EA2BEFC8B200406B08 /* UIApplication+.swift in Sources */,
+				949E25EE2BEFCECF00406B08 /* TokenStorage.swift in Sources */,
+				949E25F52BEFD6EA00406B08 /* ScheduleViewModel.swift in Sources */,
+				949E25DF2BEFA58400406B08 /* SignInView.swift in Sources */,
+				949E25F32BEFD6D600406B08 /* ScheduleView.swift in Sources */,
+				949E25DB2BEF9D9B00406B08 /* MainViewModel.swift in Sources */,
+				949E25E12BEFA59700406B08 /* SignInViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,6 +357,7 @@
 				DEVELOPMENT_TEAM = JSU3274V26;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CalendFlow/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -304,6 +387,7 @@
 				DEVELOPMENT_TEAM = JSU3274V26;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CalendFlow/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -344,6 +428,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		949E25E22BEFC32800406B08 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.1.0;
+			};
+		};
+		949E25EB2BEFCBB600406B08 /* XCRemoteSwiftPackageReference "google-api-objectivec-client-for-rest" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/google-api-objectivec-client-for-rest";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		949E25E32BEFC32800406B08 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 949E25E22BEFC32800406B08 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		949E25E52BEFC32800406B08 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 949E25E22BEFC32800406B08 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 949E25BE2BEF9D2C00406B08 /* Project object */;
 }
