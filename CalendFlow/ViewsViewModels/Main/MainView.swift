@@ -14,8 +14,7 @@ struct MainView: View {
         Group {
             if let isSignedIn = viewModel.isSignedIn {
                 if isSignedIn {
-                    Text("Signed in")
-                        .transition(.move(edge: .bottom))
+                    CalendarView()
                 } else {
                     SignInView(isSignedIn: $viewModel.isSignedIn)
                         .transition(.move(edge: .bottom))
