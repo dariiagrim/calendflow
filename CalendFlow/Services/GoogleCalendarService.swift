@@ -16,12 +16,6 @@ final class GoogleCalendarService {
         
         let (data, _) = try await URLSession.shared.data(for: request)
         
-        if let string = String(bytes: data, encoding: .utf8) {
-            print(string)
-        } else {
-            print("not a valid UTF-8 sequence")
-        }
-        
         let decoder = JSONDecoder()
         
         let calendarList = try decoder.decode(DtoCalendarList.self, from: data)
@@ -36,7 +30,7 @@ final class GoogleCalendarService {
         } ?? []
     }
     
-    func fetchEvents(accessToken: String, calendarId: String, date: Date) async throws -> [Event] {
+    func fetchEvents(accessToken: String, userProfileId: UUID, calendarId: String, date: Date) async throws -> [Event] {
         let dateFormatter = ISO8601DateFormatter()
         
         let startTime = date.startOfDay
@@ -44,19 +38,10 @@ final class GoogleCalendarService {
         
         let url = URL(string: "https://www.googleapis.com/calendar/v3/calendars/\(calendarId)/events?timeMin=\(dateFormatter.string(from: startTime))&timeMax=\(dateFormatter.string(from: endTime))")!
         
-        print(url)
-        
         var request = URLRequest(url: url)
         request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         
         let (data, _) = try await URLSession.shared.data(for: request)
-        
-        if let string = String(bytes: data, encoding: .utf8) {
-            print(string)
-        } else {
-            print("not a valid UTF-8 sequence")
-        }
-        
         
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
@@ -75,9 +60,63 @@ final class GoogleCalendarService {
                 startTimeHour: startHour,
                 startTimeMinutes: startMinutes,
                 endTimeHour: endHour,
-                endTimeMinutes: endMinutes
+                endTimeMinutes: endMinutes,
+                calendarId: calendarId,
+                userProfileId: userProfileId
             )
         } ?? []
+    }
+    
+    func deleteEvent(accessToken: String, userProfileId: UUID, calendarId: String, eventId: String) async throws {
+        let url = URL(string: "https://www.googleapis.com/calendar/v3/calendars/\(calendarId)/events/\(eventId)")!
+        
+        print("Deleting event with URL: \(url)")
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 204 {
+            print("Event successfully deleted")
+        } else {
+            let errorData = String(bytes: data, encoding: .utf8) ?? "Unknown error"
+            print("Failed to delete the event: \(errorData)")
+            throw NSError(domain: "DeleteEventError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Failed to delete event: \(errorData)"])
+        }
+    }
+    
+    func updateEventTime(accessToken: String, userProfileId: UUID, calendarId: String, eventId: String, newStartTime: Date, newEndTime: Date) async throws {
+        let url = URL(string: "https://www.googleapis.com/calendar/v3/calendars/\(calendarId)/events/\(eventId)")!
+
+        print("Updating event time with URL: \(url)")
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "PATCH"
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let dateFormatter = ISO8601DateFormatter()
+        dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+
+        let json: [String: Any] = [
+            "start": ["dateTime": dateFormatter.string(from: newStartTime)],
+            "end": ["dateTime": dateFormatter.string(from: newEndTime)]
+        ]
+        
+        let jsonData = try JSONSerialization.data(withJSONObject: json)
+        request.httpBody = jsonData
+
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+            print("Event time successfully updated")
+        } else {
+            let errorData = String(bytes: data, encoding: .utf8) ?? "Unknown error"
+            print("Failed to update event time: \(errorData)")
+            throw NSError(domain: "UpdateEventTimeError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Failed to update event time: \(errorData)"])
+        }
     }
 }
 

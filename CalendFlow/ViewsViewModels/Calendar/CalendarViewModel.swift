@@ -11,7 +11,7 @@ import Combine
 class CalendarViewModel: ObservableObject {
     @Published private(set) var calendars: [GoogleCalendar] = []
     @Published var selectedDate = Date()
-    @Published private(set) var events = [Event]()
+    @Published var events = [Event]()
     @Published var selectedCalendars: [GoogleCalendar] = []
     
     private let calendarService = GoogleCalendarService()
@@ -44,26 +44,14 @@ class CalendarViewModel: ObservableObject {
         events = []
         
         Task{
-            for selectedCalendar in selectedCalendars {
+            for selectedCalendar in self.selectedCalendars {
                 let accessToken = TokenStorage.shared.getTokenById(id: selectedCalendar.userProfileId)
                 // TODO: safe try
-                let newEvents = try! await calendarService.fetchEvents(accessToken: accessToken, calendarId: selectedCalendar.id, date: selectedDate)
+                let newEvents = try! await calendarService.fetchEvents(accessToken: accessToken, userProfileId: selectedCalendar.userProfileId, calendarId: selectedCalendar.id, date: selectedDate)
                 await MainActor.run {
                     events.append(contentsOf: newEvents)
                 }
             }
         }
     }
-
-//    func loadCalendars() async {
-//        let accessToken = TokenStorage.shared.getToken()
-//        do {
-//            let calendars = try await calendarService.getCalendars(accessToken: accessToken)
-//            await MainActor.run {
-//                self.calendars = calendars
-//            }
-//        } catch {
-//            print(error)
-//        }
-//    }
 }

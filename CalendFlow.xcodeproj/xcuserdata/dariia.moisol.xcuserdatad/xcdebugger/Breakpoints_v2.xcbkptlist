@@ -14,9 +14,9 @@
             filePath = "CalendFlow/Services/GoogleCalendarService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
-            landmarkName = "fetchEvents(accessToken:calendarId:date:)"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
+            landmarkName = "fetchEvents(accessToken:userProfileId:calendarId:date:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -34,6 +34,22 @@
             endingLineNumber = "16"
             landmarkName = "unknown"
             landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "35E515E6-35DB-4D17-BFA3-0CE02B8C9871"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CalendFlow/ViewsViewModels/Calendar/CalendarViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "CalendarViewModel"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

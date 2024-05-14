@@ -51,8 +51,6 @@ class ScheduleViewModel: ObservableObject {
             eventsWithIntersections[index].intersectionIndex = intersectionStartedBeforeCount
         }
         
-        print(eventsWithIntersections)
-        
         return eventsWithIntersections
     }
 }

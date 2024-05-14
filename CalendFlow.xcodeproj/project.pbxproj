@@ -19,6 +19,8 @@
 		943C39842BF354B100DB0F7F /* ManageCalendarsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943C39832BF354B100DB0F7F /* ManageCalendarsListView.swift */; };
 		943C39862BF36C1C00DB0F7F /* ManageCalendarsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943C39852BF36C1C00DB0F7F /* ManageCalendarsViewModel.swift */; };
 		943C39882BF37A8A00DB0F7F /* ManageCalendarsCalendarBlockViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943C39872BF37A8A00DB0F7F /* ManageCalendarsCalendarBlockViewModel.swift */; };
+		943C398A2BF3983000DB0F7F /* CalendarExpandedEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943C39892BF3983000DB0F7F /* CalendarExpandedEventView.swift */; };
+		943D98AB2BF3B78800EB62DD /* CalendarExpendedEventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943D98AA2BF3B78800EB62DD /* CalendarExpendedEventViewModel.swift */; };
 		949E25CA2BEF9D2C00406B08 /* CalendFlowApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949E25C92BEF9D2C00406B08 /* CalendFlowApp.swift */; };
 		949E25CE2BEF9D2D00406B08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 949E25CD2BEF9D2D00406B08 /* Assets.xcassets */; };
 		949E25D12BEF9D2D00406B08 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 949E25D02BEF9D2D00406B08 /* Preview Assets.xcassets */; };
@@ -57,6 +59,8 @@
 		943C39832BF354B100DB0F7F /* ManageCalendarsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageCalendarsListView.swift; sourceTree = "<group>"; };
 		943C39852BF36C1C00DB0F7F /* ManageCalendarsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageCalendarsViewModel.swift; sourceTree = "<group>"; };
 		943C39872BF37A8A00DB0F7F /* ManageCalendarsCalendarBlockViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageCalendarsCalendarBlockViewModel.swift; sourceTree = "<group>"; };
+		943C39892BF3983000DB0F7F /* CalendarExpandedEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarExpandedEventView.swift; sourceTree = "<group>"; };
+		943D98AA2BF3B78800EB62DD /* CalendarExpendedEventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarExpendedEventViewModel.swift; sourceTree = "<group>"; };
 		949E25C62BEF9D2C00406B08 /* CalendFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CalendFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		949E25C92BEF9D2C00406B08 /* CalendFlowApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendFlowApp.swift; sourceTree = "<group>"; };
 		949E25CD2BEF9D2D00406B08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -192,6 +196,8 @@
 				943C39782BF33B7900DB0F7F /* CalendarSelectedDateView.swift */,
 				943C397A2BF347EA00DB0F7F /* CalendarAddNewCalendarButtonView.swift */,
 				943C397C2BF3492D00DB0F7F /* CalendarGoToChatbotButtonView.swift */,
+				943C39892BF3983000DB0F7F /* CalendarExpandedEventView.swift */,
+				943D98AA2BF3B78800EB62DD /* CalendarExpendedEventViewModel.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -337,6 +343,7 @@
 				943C39772BF2AB5600DB0F7F /* Date.swift in Sources */,
 				949E25CA2BEF9D2C00406B08 /* CalendFlowApp.swift in Sources */,
 				94A8854D2BF20A2E00ECFA0D /* WeekDayView.swift in Sources */,
+				943D98AB2BF3B78800EB62DD /* CalendarExpendedEventViewModel.swift in Sources */,
 				949E25D82BEF9D7600406B08 /* MainView.swift in Sources */,
 				943C397D2BF3492D00DB0F7F /* CalendarGoToChatbotButtonView.swift in Sources */,
 				94A885482BF2085400ECFA0D /* WeekView.swift in Sources */,
@@ -360,6 +367,7 @@
 				943C397B2BF347EA00DB0F7F /* CalendarAddNewCalendarButtonView.swift in Sources */,
 				949E25FC2BEFDFC500406B08 /* GoogleCalendarService.swift in Sources */,
 				949E25DF2BEFA58400406B08 /* SignInView.swift in Sources */,
+				943C398A2BF3983000DB0F7F /* CalendarExpandedEventView.swift in Sources */,
 				949E25F32BEFD6D600406B08 /* CalendarView.swift in Sources */,
 				94A885412BEFF19B00ECFA0D /* GoogleCalendarEvent.swift in Sources */,
 				949E25DB2BEF9D9B00406B08 /* MainViewModel.swift in Sources */,

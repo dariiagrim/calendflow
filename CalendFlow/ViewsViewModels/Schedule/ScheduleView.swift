@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ScheduleView: View {
     @ObservedObject var viewModel: ScheduleViewModel
+    @Binding var clickedEvent: Event?
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -21,10 +22,13 @@ struct ScheduleView: View {
                     }
                 }
 
-                ForEach(viewModel.eventWithIntersections, id: \.event.id) {
-                    ScheduleEventView(event: $0.event)
-                        .padding(.top, CGFloat($0.event.startTimeInMinutes))
-                        .padding(.leading, 30 * CGFloat($0.intersectionIndex + 1))
+                ForEach(viewModel.eventWithIntersections, id: \.event.id) { item in
+                    let event = item.event
+                    Button(action: {clickedEvent =  event}) {
+                        ScheduleEventView(event: item.event)
+                    }
+                    .padding(.top, CGFloat(item.event.startTimeInMinutes))
+                    .padding(.leading, 30 * CGFloat(item.intersectionIndex + 1))
                 }
             }
         }
@@ -40,7 +44,9 @@ struct ScheduleView: View {
                 startTimeHour: 6,
                 startTimeMinutes: 10,
                 endTimeHour: 9,
-                endTimeMinutes: 40
+                endTimeMinutes: 40,
+                calendarId: "1",
+                userProfileId: UUID()
             ),
             Event(
                 id: "2",
@@ -48,7 +54,9 @@ struct ScheduleView: View {
                 startTimeHour: 6,
                 startTimeMinutes: 10,
                 endTimeHour: 9,
-                endTimeMinutes: 40
+                endTimeMinutes: 40,
+                calendarId: "1",
+                userProfileId: UUID()
             ),
             Event(
                 id: "3",
@@ -56,8 +64,10 @@ struct ScheduleView: View {
                 startTimeHour: 7,
                 startTimeMinutes: 10,
                 endTimeHour: 7,
-                endTimeMinutes: 40
+                endTimeMinutes: 40,
+                calendarId: "1",
+                userProfileId: UUID()
             )
         ]
-    ))
+    ), clickedEvent: .constant(nil))
 }

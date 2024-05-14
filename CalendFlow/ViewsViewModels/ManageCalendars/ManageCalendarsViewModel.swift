@@ -12,26 +12,20 @@ class ManageCalendarsViewModel: ObservableObject {
     @Published private(set) var calendars: [GoogleCalendar] = []
     private var newAccountAdded = false {
         didSet {
-            Task {
-                await fetchCalendars()
-            }
+            fetchCalendars()
         }
     }
     
     private let calendarService = GoogleCalendarService()
     
     init() {
-        Task {
-            await fetchCalendars()
-        }
-
+        fetchCalendars()
     }
     
     func addNewAccount() {
         guard let controller = UIApplication.shared.keyWindow?.rootViewController else { return }
         GIDSignIn.sharedInstance.signIn(withPresenting: controller, hint: nil, additionalScopes: ["https://www.googleapis.com/auth/calendar"]) { [weak self] result, error in
             if let result {
-                print(result.user)
                 TokenStorage.shared.setToken(token: result.user.accessToken.tokenString)
                 self?.newAccountAdded = true
             } else {
@@ -41,7 +35,7 @@ class ManageCalendarsViewModel: ObservableObject {
     }
     
 
-    func fetchCalendars() async {
+    func fetchCalendars() {
         calendars = []
         let tokenProfiles = TokenStorage.shared.getAllTokenProfiles()
         

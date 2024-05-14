@@ -9,26 +9,10 @@ import SwiftUI
 
 struct CalendarView: View {
     @ObservedObject private var viewModel = CalendarViewModel()
-
+    @State private var showingEventSheet = false
+    @State var clickedEvent: Event?
+    
     var body: some View {
-        //        ScrollView(.horizontal, showsIndicators: false) {
-        //            HStack(spacing: 20) {
-        //                ForEach(viewModel.calendars, id: \.name) { calendar in
-        //                    VStack(alignment: .leading) {
-        //                        Text(calendar.name)
-        //                            .font(.headline)
-        //                            .padding(.bottom, 5)
-        //                    }
-        //                    .padding()
-        //                    .background(Color.gray.opacity(0.2))
-        //                    .cornerRadius(10)
-        //                }
-        //            }
-        //            .padding()
-        //        }
-        //        .task {
-        //            await viewModel.loadCalendars()
-        //        }
         NavigationView {
             VStack {
                 VStack (alignment: .leading){
@@ -42,18 +26,41 @@ struct CalendarView: View {
                         }
                     }
                     CalendarSelectedDateView(selectedDate: viewModel.selectedDate)
-                    ScheduleView(viewModel: ScheduleViewModel(events: viewModel.events))
+                    ScheduleView(viewModel: ScheduleViewModel(events: viewModel.events), clickedEvent: $clickedEvent)
+                        .onChange(of: clickedEvent) { 
+                            if clickedEvent != nil {
+                                showingEventSheet = true
+                            }
+                        }
                     WeekView(selectedDate: $viewModel.selectedDate)
                 }
                 .padding(.horizontal, 20)
             }
             .background(Color.background)
+            .sheet(isPresented: $showingEventSheet, onDismiss: {
+                clickedEvent = nil  // Reset the clicked event after closing the sheet
+            }) {
+                if let event = clickedEvent {
+                    CalendarExpandedEventView(
+                        event: event,
+                        date: viewModel.selectedDate,
+                        events: $viewModel.events
+                    )
+                    .padding(.top, 50)
+                    .presentationDetents([.fraction(0.4)])
+                    .presentationDragIndicator(.visible)
+                }
+            }
+        }
+        .onChange(of: viewModel.events) {
+            showingEventSheet = false
         }
     }
     
     func getAction() {
         
     }
+    
 }
 #Preview {
     CalendarView()
