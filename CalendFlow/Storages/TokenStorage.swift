@@ -10,15 +10,39 @@ import Foundation
 final class TokenStorage {
     static let shared = TokenStorage()
     
-    private var token = ""
+    private var tokenProfiles: [TokenProfile] = []
     
     private init() {}
 
     func setToken(token: String) {
-        self.token = token
+        if tokenProfiles.contains(where: { tokenProfile in
+            tokenProfile.token == token
+        }) {
+            return
+        }
+        
+        tokenProfiles.append(TokenProfile(token: token))
     }
     
-    func getToken() -> String {
-        return self.token
+    func getTokenById(id: UUID) -> String {
+        let firstIndex = tokenProfiles.firstIndex { tokenProfile in
+            tokenProfile.id == id
+        }
+        
+        if let firstIndex = firstIndex {
+            return tokenProfiles[firstIndex].token
+        }
+        
+        return ""
     }
+    
+    func getAllTokenProfiles() -> [TokenProfile] {
+        return tokenProfiles
+    }
+}
+
+
+struct TokenProfile {
+    var id = UUID()
+    var token = ""
 }

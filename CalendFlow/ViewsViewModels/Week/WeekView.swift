@@ -23,9 +23,8 @@ struct WeekView: View {
                 .tag(index)
             }
         }
-        .padding()
         // TODO: fix later
-        .frame(height: 100)
+        .frame(height: 80)
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
         .onAppear {
             let calendar = Calendar.current

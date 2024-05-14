@@ -12,6 +12,7 @@ struct ScheduleView: View {
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
+           Divider().overlay(Color.dark2)
             ZStack(alignment: .topLeading) {
                 VStack(spacing: 0) {
                     ForEach(0..<24) {
@@ -19,7 +20,6 @@ struct ScheduleView: View {
                         Divider().overlay(Color.dark2)
                     }
                 }
-                .padding(.horizontal, 20)
 
                 ForEach(viewModel.eventWithIntersections, id: \.event.id) {
                     ScheduleEventView(event: $0.event)

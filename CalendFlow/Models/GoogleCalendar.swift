@@ -7,8 +7,12 @@
 
 import Foundation
 
-struct GoogleCalendar {
-    var name: String
-    var isChosen = true
+struct GoogleCalendar: Equatable {
+    var userProfileId: UUID
     var id: String
+    var summary: String
+    
+    static func ==(lhs: GoogleCalendar, rhs: GoogleCalendar) -> Bool {
+        return lhs.userProfileId == lhs.userProfileId && lhs.id == rhs.id && lhs.summary == rhs.summary
+    }
 }

@@ -34,7 +34,7 @@ struct SignInView: View {
                 .frame(maxWidth: .infinity, maxHeight: geometry.size.height * 2 / 3)
 
                 Button(action: viewModel.signIn) {
-                    ConnectGoogleCalendarView()
+                    ConnectGoogleCalendarView(text: "Connect your Google Calendar")
                 }
                 .frame(maxWidth: .infinity, maxHeight: geometry.size.height / 3)
             }

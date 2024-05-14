@@ -15,6 +15,7 @@ class SignInViewModel: ObservableObject {
         guard let controller = UIApplication.shared.keyWindow?.rootViewController else { return }
         GIDSignIn.sharedInstance.signIn(withPresenting: controller, hint: nil, additionalScopes: ["https://www.googleapis.com/auth/calendar"]) { [weak self] result, error in
             if let result {
+                print(result.user)
                 TokenStorage.shared.setToken(token: result.user.accessToken.tokenString)
                 self?.signInToggle = true
             } else {

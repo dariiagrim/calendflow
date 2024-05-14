@@ -8,27 +8,33 @@
 import Foundation
 
 final class GoogleCalendarService {
-//    func getCalendars(accessToken: String) async throws -> [GoogleCalendar] {
-//        let url = URL(string: "https://www.googleapis.com/calendar/v3/users/me/calendarList")!
-//        
-//        var request = URLRequest(url: url)
-//        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-//        
-//        let (data, _) = try await URLSession.shared.data(for: request)
-//        
-//        if let string = String(bytes: data, encoding: .utf8) {
-//            print(string)
-//        } else {
-//            print("not a valid UTF-8 sequence")
-//        }
-//        
-//        let decoder = JSONDecoder()
-//        let calendarList = try decoder.decode(CalendarList.self, from: data)
-//        
-//        let calendars = calendarList.items.map { GoogleCalendar(name: $0.summary, id: $0.id) }
-//        
-//        return calendars
-//    }
+    func fetchCalendars(accessToken: String, userProfileId: UUID) async throws -> [GoogleCalendar] {
+        let url = URL(string: "https://www.googleapis.com/calendar/v3/users/me/calendarList")!
+        
+        var request = URLRequest(url: url)
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        if let string = String(bytes: data, encoding: .utf8) {
+            print(string)
+        } else {
+            print("not a valid UTF-8 sequence")
+        }
+        
+        let decoder = JSONDecoder()
+        
+        let calendarList = try decoder.decode(DtoCalendarList.self, from: data)
+        
+        return calendarList.items?.map { calendar in
+            // TODO: safe optional
+            return GoogleCalendar(
+                userProfileId: userProfileId,
+                id: calendar.id,
+                summary: calendar.summary
+            )
+        } ?? []
+    }
     
     func fetchEvents(accessToken: String, calendarId: String, date: Date) async throws -> [Event] {
         let dateFormatter = ISO8601DateFormatter()
@@ -75,22 +81,16 @@ final class GoogleCalendarService {
     }
 }
 
-//struct Event {
-//    let title: String
-//    let start: Date
-//    let end: Date
-//}
-//
-//struct CalendarList: Codable {
-//    var items: [CalendarEntry]
-//}
-//
-//struct CalendarEntry: Codable {
-//    var id: String
-//    var summary: String
-//    var description: String?
-//}
-//
+
+struct DtoCalendarList: Decodable {
+    var items: [DtoCalendarItem]?
+}
+
+struct DtoCalendarItem: Decodable {
+    var id: String
+    var summary: String
+}
+
 struct DtoEventsList: Decodable {
     let items: [DtoEventItem]?
 }

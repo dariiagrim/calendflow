@@ -11,6 +11,14 @@
 		943C39732BF2339E00DB0F7F /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943C39722BF2339E00DB0F7F /* Event.swift */; };
 		943C39752BF2367900DB0F7F /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943C39742BF2367900DB0F7F /* Color.swift */; };
 		943C39772BF2AB5600DB0F7F /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943C39762BF2AB5600DB0F7F /* Date.swift */; };
+		943C39792BF33B7900DB0F7F /* CalendarSelectedDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943C39782BF33B7900DB0F7F /* CalendarSelectedDateView.swift */; };
+		943C397B2BF347EA00DB0F7F /* CalendarAddNewCalendarButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943C397A2BF347EA00DB0F7F /* CalendarAddNewCalendarButtonView.swift */; };
+		943C397D2BF3492D00DB0F7F /* CalendarGoToChatbotButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943C397C2BF3492D00DB0F7F /* CalendarGoToChatbotButtonView.swift */; };
+		943C39802BF34E6200DB0F7F /* ManageCalendarsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943C397F2BF34E6200DB0F7F /* ManageCalendarsView.swift */; };
+		943C39822BF3517500DB0F7F /* ManageCalendarsCalendarBlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943C39812BF3517500DB0F7F /* ManageCalendarsCalendarBlockView.swift */; };
+		943C39842BF354B100DB0F7F /* ManageCalendarsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943C39832BF354B100DB0F7F /* ManageCalendarsListView.swift */; };
+		943C39862BF36C1C00DB0F7F /* ManageCalendarsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943C39852BF36C1C00DB0F7F /* ManageCalendarsViewModel.swift */; };
+		943C39882BF37A8A00DB0F7F /* ManageCalendarsCalendarBlockViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943C39872BF37A8A00DB0F7F /* ManageCalendarsCalendarBlockViewModel.swift */; };
 		949E25CA2BEF9D2C00406B08 /* CalendFlowApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949E25C92BEF9D2C00406B08 /* CalendFlowApp.swift */; };
 		949E25CE2BEF9D2D00406B08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 949E25CD2BEF9D2D00406B08 /* Assets.xcassets */; };
 		949E25D12BEF9D2D00406B08 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 949E25D02BEF9D2D00406B08 /* Preview Assets.xcassets */; };
@@ -41,6 +49,14 @@
 		943C39722BF2339E00DB0F7F /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		943C39742BF2367900DB0F7F /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		943C39762BF2AB5600DB0F7F /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		943C39782BF33B7900DB0F7F /* CalendarSelectedDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSelectedDateView.swift; sourceTree = "<group>"; };
+		943C397A2BF347EA00DB0F7F /* CalendarAddNewCalendarButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarAddNewCalendarButtonView.swift; sourceTree = "<group>"; };
+		943C397C2BF3492D00DB0F7F /* CalendarGoToChatbotButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarGoToChatbotButtonView.swift; sourceTree = "<group>"; };
+		943C397F2BF34E6200DB0F7F /* ManageCalendarsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageCalendarsView.swift; sourceTree = "<group>"; };
+		943C39812BF3517500DB0F7F /* ManageCalendarsCalendarBlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageCalendarsCalendarBlockView.swift; sourceTree = "<group>"; };
+		943C39832BF354B100DB0F7F /* ManageCalendarsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageCalendarsListView.swift; sourceTree = "<group>"; };
+		943C39852BF36C1C00DB0F7F /* ManageCalendarsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageCalendarsViewModel.swift; sourceTree = "<group>"; };
+		943C39872BF37A8A00DB0F7F /* ManageCalendarsCalendarBlockViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageCalendarsCalendarBlockViewModel.swift; sourceTree = "<group>"; };
 		949E25C62BEF9D2C00406B08 /* CalendFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CalendFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		949E25C92BEF9D2C00406B08 /* CalendFlowApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendFlowApp.swift; sourceTree = "<group>"; };
 		949E25CD2BEF9D2D00406B08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -79,6 +95,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		943C397E2BF34E2C00DB0F7F /* ManageCalendars */ = {
+			isa = PBXGroup;
+			children = (
+				943C397F2BF34E6200DB0F7F /* ManageCalendarsView.swift */,
+				943C39852BF36C1C00DB0F7F /* ManageCalendarsViewModel.swift */,
+				943C39832BF354B100DB0F7F /* ManageCalendarsListView.swift */,
+				943C39812BF3517500DB0F7F /* ManageCalendarsCalendarBlockView.swift */,
+				943C39872BF37A8A00DB0F7F /* ManageCalendarsCalendarBlockViewModel.swift */,
+			);
+			path = ManageCalendars;
+			sourceTree = "<group>";
+		};
 		949E25BD2BEF9D2C00406B08 = {
 			isa = PBXGroup;
 			children = (
@@ -161,6 +189,9 @@
 			children = (
 				949E25F22BEFD6D600406B08 /* CalendarView.swift */,
 				949E25F42BEFD6EA00406B08 /* CalendarViewModel.swift */,
+				943C39782BF33B7900DB0F7F /* CalendarSelectedDateView.swift */,
+				943C397A2BF347EA00DB0F7F /* CalendarAddNewCalendarButtonView.swift */,
+				943C397C2BF3492D00DB0F7F /* CalendarGoToChatbotButtonView.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -185,10 +216,11 @@
 		94A885422BF1EE2700ECFA0D /* ViewsViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				943C397E2BF34E2C00DB0F7F /* ManageCalendars */,
+				949E25EF2BEFD69B00406B08 /* Calendar */,
 				94A885502BF2235A00ECFA0D /* Schedule */,
 				94A885462BF2084400ECFA0D /* Week */,
 				94A885432BF1EE7600ECFA0D /* ConnectGoogleCalendar */,
-				949E25EF2BEFD69B00406B08 /* Calendar */,
 				949E25DD2BEFA54D00406B08 /* SignIn */,
 				949E25D92BEF9D9100406B08 /* Main */,
 			);
@@ -306,18 +338,26 @@
 				949E25CA2BEF9D2C00406B08 /* CalendFlowApp.swift in Sources */,
 				94A8854D2BF20A2E00ECFA0D /* WeekDayView.swift in Sources */,
 				949E25D82BEF9D7600406B08 /* MainView.swift in Sources */,
+				943C397D2BF3492D00DB0F7F /* CalendarGoToChatbotButtonView.swift in Sources */,
 				94A885482BF2085400ECFA0D /* WeekView.swift in Sources */,
 				943C39712BF2331A00DB0F7F /* ScheduleEventView.swift in Sources */,
+				943C39792BF33B7900DB0F7F /* CalendarSelectedDateView.swift in Sources */,
+				943C39802BF34E6200DB0F7F /* ManageCalendarsView.swift in Sources */,
 				94A8854A2BF2086100ECFA0D /* WeekViewModel.swift in Sources */,
 				94A885532BF2238800ECFA0D /* ScheduleView.swift in Sources */,
 				94A885452BF1EEC400ECFA0D /* ConnectGoogleCalendarView.swift in Sources */,
 				949E25EA2BEFC8B200406B08 /* UIApplication+.swift in Sources */,
 				949E25EE2BEFCECF00406B08 /* TokenStorage.swift in Sources */,
+				943C39882BF37A8A00DB0F7F /* ManageCalendarsCalendarBlockViewModel.swift in Sources */,
 				94A885572BF22CF300ECFA0D /* ScheduleTimeBlockView.swift in Sources */,
 				94A885552BF2239600ECFA0D /* ScheduleViewModel.swift in Sources */,
+				943C39842BF354B100DB0F7F /* ManageCalendarsListView.swift in Sources */,
+				943C39822BF3517500DB0F7F /* ManageCalendarsCalendarBlockView.swift in Sources */,
 				949E25F82BEFDAEC00406B08 /* GoogleCalendar.swift in Sources */,
 				943C39752BF2367900DB0F7F /* Color.swift in Sources */,
 				949E25F52BEFD6EA00406B08 /* CalendarViewModel.swift in Sources */,
+				943C39862BF36C1C00DB0F7F /* ManageCalendarsViewModel.swift in Sources */,
+				943C397B2BF347EA00DB0F7F /* CalendarAddNewCalendarButtonView.swift in Sources */,
 				949E25FC2BEFDFC500406B08 /* GoogleCalendarService.swift in Sources */,
 				949E25DF2BEFA58400406B08 /* SignInView.swift in Sources */,
 				949E25F32BEFD6D600406B08 /* CalendarView.swift in Sources */,

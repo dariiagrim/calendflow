@@ -12,24 +12,45 @@ class CalendarViewModel: ObservableObject {
     @Published private(set) var calendars: [GoogleCalendar] = []
     @Published var selectedDate = Date()
     @Published private(set) var events = [Event]()
+    @Published var selectedCalendars: [GoogleCalendar] = []
     
     private let calendarService = GoogleCalendarService()
-    private var subscriptions: Set<AnyCancellable> = []
-    
+    private var selectedDateSubscriptions: Set<AnyCancellable> = []
+    private var selectedCalendarsSubscriptions: Set<AnyCancellable> = []
+   
     init() {
         $selectedDate
+            .dropFirst()
             .sink(receiveValue: onDateChanged)
-            .store(in: &subscriptions)
+            .store(in: &selectedDateSubscriptions)
+        
+        $selectedCalendars
+            .dropFirst()
+            .sink(receiveValue: onSelectedCalendarsChanged)
+            .store(in: &selectedCalendarsSubscriptions)
+        fetchEvents()
     }
     
     func onDateChanged(date: Date) {
-        let accessToken = TokenStorage.shared.getToken()
+        fetchEvents()
+    }
+    
+    
+    func onSelectedCalendarsChanged(calendars: [GoogleCalendar]) {
+        fetchEvents()
+    }
+    
+    func fetchEvents () {
+        events = []
         
         Task{
-            // TODO: safe try
-            let newEvents = try! await calendarService.fetchEvents(accessToken: accessToken, calendarId: "grimalskayad@gmail.com", date: date)
-            await MainActor.run {
-                self.events = newEvents
+            for selectedCalendar in selectedCalendars {
+                let accessToken = TokenStorage.shared.getTokenById(id: selectedCalendar.userProfileId)
+                // TODO: safe try
+                let newEvents = try! await calendarService.fetchEvents(accessToken: accessToken, calendarId: selectedCalendar.id, date: selectedDate)
+                await MainActor.run {
+                    events.append(contentsOf: newEvents)
+                }
             }
         }
     }
