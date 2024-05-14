@@ -19,6 +19,31 @@ class CalendarExpendedEventViewModel: ObservableObject {
         self.events = events
     }
     
+    
+    func startEventNow() {
+        let newStartTime = Date()
+        let newEndTime = Calendar.current.date(byAdding: .minute, value: event.durationInMinutes, to: newStartTime)!
+        
+        let startHour = Calendar.current.component(.hour, from: newStartTime)
+        let startMinutes = Calendar.current.component(.minute, from: newStartTime)
+        let endHour = Calendar.current.component(.hour, from: newEndTime)
+        let endMinutes = Calendar.current.component(.minute, from: newEndTime)
+        
+        let accessToken = TokenStorage.shared.getTokenById(id: event.userProfileId)
+        
+        Task{
+            // TODO: safe try
+            try! await calendarService.updateEventTime(accessToken: accessToken, userProfileId: event.userProfileId, calendarId: event.calendarId, eventId: event.id, newStartTime: newStartTime, newEndTime: newEndTime)
+        }
+        
+        if let index = events.firstIndex(where: { $0.id == event.id }) {
+            events[index].startTimeHour = startHour
+            events[index].startTimeMinutes = startMinutes
+            events[index].endTimeHour = endHour
+            events[index].endTimeMinutes = endMinutes
+        }
+    }
+    
     func deleteEvent() {
         let accessToken = TokenStorage.shared.getTokenById(id: event.userProfileId)
         

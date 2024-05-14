@@ -63,6 +63,10 @@ struct Event: Equatable{
         return endTimeHour * 60 + endTimeMinutes
     }
     
+    var durationInMinutes: Int {
+        return endTimeInMinutes - startTimeInMinutes
+    }
+    
     func intersects(with event: Event) -> Bool {
         let range = (startTimeInMinutes+1)...(endTimeInMinutes-1)
         let otherRange = (event.startTimeInMinutes+1)...(event.endTimeInMinutes-1)

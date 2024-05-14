@@ -57,7 +57,10 @@ struct CalendarExpandedEventView: View {
                         .foregroundColor(Color.dark2)
                 }
                 Spacer()
-                Button(action: getAction) {
+                Button( action: {
+                    viewModel.startEventNow()
+                    events = viewModel.events
+                }) {
                     Image(systemName: "play.fill")
                         .resizable()
                         .frame(width: 35, height: 35)
