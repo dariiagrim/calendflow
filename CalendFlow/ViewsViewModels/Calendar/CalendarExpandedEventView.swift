@@ -11,14 +11,16 @@ struct CalendarExpandedEventView: View {
     var event: Event
     var date: Date
     @Binding var events: [Event]
+    @Binding var shouldShowChatbotView: Bool
     
     @ObservedObject private var viewModel: CalendarExpendedEventViewModel
     
-    init(event: Event, date: Date, events: Binding<[Event]>) {
+    init(event: Event, date: Date, events: Binding<[Event]>, shouldShowChatbotView: Binding<Bool>) {
         self._events = events
         self.event = event
         self.date = date
         self.viewModel = CalendarExpendedEventViewModel(event: event, events: events.wrappedValue)
+        self._shouldShowChatbotView = shouldShowChatbotView
     }
     
     private var dateFormatter: DateFormatter {
@@ -50,7 +52,7 @@ struct CalendarExpandedEventView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             HStack {
-                Button(action: getAction) {
+                Button(action: {shouldShowChatbotView = true}) {
                     Image(systemName: "pencil.line")
                         .resizable()
                         .frame(width: 35, height: 35)
@@ -112,6 +114,7 @@ struct CalendarExpandedEventView: View {
             userProfileId: UUID()
         ),
         date: Date(),
-        events: .constant([])
+        events: .constant([]),
+        shouldShowChatbotView: .constant(false)
     )
 }

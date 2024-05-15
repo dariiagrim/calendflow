@@ -11,23 +11,24 @@ struct CalendarView: View {
     @ObservedObject private var viewModel = CalendarViewModel()
     @State private var showingEventSheet = false
     @State var clickedEvent: Event?
+    @State var shouldShowChatbotView = false
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
-                VStack (alignment: .leading){
+                VStack(alignment: .leading) {
                     HStack {
                         NavigationLink(destination: ManageCalendarsView(selectedCalendars: $viewModel.selectedCalendars)) {
                             CalendarAddNewCalendarButtonView()
                         }
                         Spacer()
-                        Button(action: getAction) {
+                        NavigationLink(destination: ChatbotView()) {
                             CalendarGoToChatbotButtonView()
                         }
                     }
                     CalendarSelectedDateView(selectedDate: viewModel.selectedDate)
                     ScheduleView(viewModel: ScheduleViewModel(events: viewModel.events), clickedEvent: $clickedEvent)
-                        .onChange(of: clickedEvent) { 
+                        .onChange(of: clickedEvent) {
                             if clickedEvent != nil {
                                 showingEventSheet = true
                             }
@@ -44,24 +45,27 @@ struct CalendarView: View {
                     CalendarExpandedEventView(
                         event: event,
                         date: viewModel.selectedDate,
-                        events: $viewModel.events
+                        events: $viewModel.events,
+                        shouldShowChatbotView: $shouldShowChatbotView
                     )
                     .padding(.top, 50)
                     .presentationDetents([.fraction(0.4)])
                     .presentationDragIndicator(.visible)
                 }
             }
+            .navigationDestination(isPresented: $shouldShowChatbotView) {
+                ChatbotView()
+            }
         }
         .onChange(of: viewModel.events) {
             showingEventSheet = false
         }
+        .onChange(of: shouldShowChatbotView) {
+            showingEventSheet = false
+        }
     }
-    
-    func getAction() {
-        
-    }
-    
 }
+
 #Preview {
     CalendarView()
 }
