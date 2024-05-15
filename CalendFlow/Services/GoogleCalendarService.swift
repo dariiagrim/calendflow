@@ -49,10 +49,10 @@ final class GoogleCalendarService {
         
         return eventsList.items?.map { event in
             // TODO: safe optional
-            let startHour = Calendar.current.component(.hour, from: event.start.dateTime!)
-            let startMinutes = Calendar.current.component(.minute, from: event.start.dateTime!)
-            let endHour = Calendar.current.component(.hour, from: event.end.dateTime!)
-            let endMinutes = Calendar.current.component(.minute, from: event.end.dateTime!)
+            let startHour = Calendar.current.component(.hour, from: event.start.dateTime)
+            let startMinutes = Calendar.current.component(.minute, from: event.start.dateTime)
+            let endHour = Calendar.current.component(.hour, from: event.end.dateTime)
+            let endMinutes = Calendar.current.component(.minute, from: event.end.dateTime)
             
             return Event(
                 id: event.id,
@@ -62,7 +62,8 @@ final class GoogleCalendarService {
                 endTimeHour: endHour,
                 endTimeMinutes: endMinutes,
                 calendarId: calendarId,
-                userProfileId: userProfileId
+                userProfileId: userProfileId,
+                date: event.start.dateTime
             )
         } ?? []
     }
@@ -134,13 +135,13 @@ struct DtoEventsList: Decodable {
     let items: [DtoEventItem]?
 }
 
-struct  DtoEventItem: Decodable {
+struct DtoEventItem: Decodable {
     let id: String
     let summary: String
     let start: DtoEventDateTime
     let end: DtoEventDateTime
 }
 
-struct  DtoEventDateTime: Decodable {
-    let dateTime: Date?
+struct DtoEventDateTime: Decodable {
+    let dateTime: Date
 }

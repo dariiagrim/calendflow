@@ -32,7 +32,8 @@ struct Event: Equatable{
     var color: String
     var calendarId: String
     var userProfileId: UUID
-    
+    let date: Date
+
     init(
         id: String,
         title: String,
@@ -41,7 +42,8 @@ struct Event: Equatable{
         endTimeHour: Int,
         endTimeMinutes: Int,
         calendarId: String,
-        userProfileId: UUID
+        userProfileId: UUID,
+        date: Date
     ) {
         self.id = id
         self.title = title
@@ -52,6 +54,7 @@ struct Event: Equatable{
         self.calendarId = calendarId
         self.userProfileId = userProfileId
         self.color = Event.colors[Event.colorIndex]
+        self.date = date
         Event.colorIndex = (Event.colorIndex + 1) % Event.colors.count
     }
     
@@ -76,9 +79,7 @@ struct Event: Equatable{
         otherRange.contains(endTimeInMinutes) || range == otherRange
     }
     
-    
     static func ==(lhs: Event, rhs: Event) -> Bool {
         return lhs.id == rhs.id && lhs.title == rhs.title && lhs.startTimeHour == rhs.startTimeHour && lhs.startTimeMinutes == rhs.startTimeMinutes  && lhs.endTimeHour == rhs.endTimeHour && lhs.endTimeMinutes == rhs.endTimeMinutes && lhs.color == lhs.color
     }
-    
 }
