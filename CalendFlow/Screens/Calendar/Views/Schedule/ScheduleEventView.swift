@@ -49,5 +49,5 @@ struct ScheduleEventView: View {
 }
 
 #Preview {
-    ScheduleEventView(event: Event(id: "1", title: "Morning routine", startTimeHour: 6, startTimeMinutes: 10, endTimeHour: 6, endTimeMinutes: 40, calendarId: "1", userProfileId: UUID(), date: Date()))
+    ScheduleEventView(event: Event(id: "1", title: "Morning routine", startTimeHour: 6, startTimeMinutes: 10, endTimeHour: 6, endTimeMinutes: 40, calendarId: "1", userProfileId: UUID(), startTime: Date(), endTime: Date()))
 }

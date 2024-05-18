@@ -35,7 +35,7 @@ class EventDetailsViewModel: ObservableObject {
 
         Task {
             // TODO: safe try
-            try! await calendarService.updateEventTime(accessToken: accessToken, userProfileId: event.userProfileId, calendarId: event.calendarId, eventId: event.id, newStartTime: newStartTime, newEndTime: newEndTime)
+            try! await calendarService.updateEvent(accessToken: accessToken, userProfileId: event.userProfileId, calendarId: event.calendarId, eventId: event.id, title: event.title,newStartTime: newStartTime, newEndTime: newEndTime)
 
             await MainActor.run {
                 var newEvent = event

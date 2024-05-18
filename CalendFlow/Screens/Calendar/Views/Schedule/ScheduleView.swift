@@ -48,7 +48,8 @@ struct ScheduleView: View {
                 endTimeMinutes: 40,
                 calendarId: "1",
                 userProfileId: UUID(),
-                date: Date()
+                startTime: Date(),
+                endTime: Date()
             ),
             Event(
                 id: "2",
@@ -59,7 +60,8 @@ struct ScheduleView: View {
                 endTimeMinutes: 40,
                 calendarId: "1",
                 userProfileId: UUID(),
-                date: Date()
+                startTime: Date(),
+                endTime: Date()
             ),
             Event(
                 id: "3",
@@ -70,7 +72,8 @@ struct ScheduleView: View {
                 endTimeMinutes: 40,
                 calendarId: "1",
                 userProfileId: UUID(),
-                date: Date()
+                startTime: Date(),
+                endTime: Date()
             )
         ],
         eventClickAction: { _ in }

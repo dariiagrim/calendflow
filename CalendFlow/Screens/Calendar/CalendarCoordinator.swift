@@ -42,9 +42,9 @@ extension CalendarCoordinator: CalendarNavigationDelegate {
         coordinate(to: coordinator, completion: completion)
     }
 
-    func openChatBot() {
+    func openChatBot(todayEvents: [Event], selectedCalendars: [GoogleCalendar], eventId: String?) {
         guard let navigationController = rootViewController.navigationController else { return }
-        let coordinator = ChatbotCoordinator(navigationController: navigationController)
+        let coordinator = ChatbotCoordinator(todayEvents: todayEvents, selectedCalendars: selectedCalendars, eventId: eventId, navigationController: navigationController)
         coordinate(to: coordinator)
     }
 

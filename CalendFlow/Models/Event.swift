@@ -32,7 +32,8 @@ struct Event: Equatable{
     var color: String
     var calendarId: String
     var userProfileId: UUID
-    let date: Date
+    let startTime: Date
+    let endTime: Date
 
     init(
         id: String,
@@ -43,7 +44,8 @@ struct Event: Equatable{
         endTimeMinutes: Int,
         calendarId: String,
         userProfileId: UUID,
-        date: Date
+        startTime: Date,
+        endTime: Date
     ) {
         self.id = id
         self.title = title
@@ -54,7 +56,8 @@ struct Event: Equatable{
         self.calendarId = calendarId
         self.userProfileId = userProfileId
         self.color = Event.colors[Event.colorIndex]
-        self.date = date
+        self.startTime = startTime
+        self.endTime = endTime
         Event.colorIndex = (Event.colorIndex + 1) % Event.colors.count
     }
     
@@ -82,4 +85,11 @@ struct Event: Equatable{
     static func ==(lhs: Event, rhs: Event) -> Bool {
         return lhs.id == rhs.id && lhs.title == rhs.title && lhs.startTimeHour == rhs.startTimeHour && lhs.startTimeMinutes == rhs.startTimeMinutes  && lhs.endTimeHour == rhs.endTimeHour && lhs.endTimeMinutes == rhs.endTimeMinutes && lhs.color == lhs.color
     }
+}
+
+struct JSONEvent: Codable {
+    var id: String
+    var title: String
+    var startTime: Date
+    var endTime: Date
 }

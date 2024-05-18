@@ -47,6 +47,29 @@ final class GoogleCalendarService {
         decoder.dateDecodingStrategy = .iso8601
         let eventsList = try decoder.decode(DtoEventsList.self, from: data)
         
+        let events: [Event] = eventsList.items?.map { event in
+            // TODO: safe optional
+            let startHour = Calendar.current.component(.hour, from: event.start.dateTime)
+            let startMinutes = Calendar.current.component(.minute, from: event.start.dateTime)
+            let endHour = Calendar.current.component(.hour, from: event.end.dateTime)
+            let endMinutes = Calendar.current.component(.minute, from: event.end.dateTime)
+            
+            return Event(
+                id: event.id,
+                title: event.summary,
+                startTimeHour: startHour,
+                startTimeMinutes: startMinutes,
+                endTimeHour: endHour,
+                endTimeMinutes: endMinutes,
+                calendarId: calendarId,
+                userProfileId: userProfileId,
+                startTime: event.start.dateTime,
+                endTime: event.end.dateTime
+            )
+        } ?? []
+        
+        print(events.count > 0 ? events[0].startTime : 0)
+        
         return eventsList.items?.map { event in
             // TODO: safe optional
             let startHour = Calendar.current.component(.hour, from: event.start.dateTime)
@@ -63,7 +86,8 @@ final class GoogleCalendarService {
                 endTimeMinutes: endMinutes,
                 calendarId: calendarId,
                 userProfileId: userProfileId,
-                date: event.start.dateTime
+                startTime: event.start.dateTime,
+                endTime: event.end.dateTime
             )
         } ?? []
     }
@@ -88,7 +112,7 @@ final class GoogleCalendarService {
         }
     }
     
-    func updateEventTime(accessToken: String, userProfileId: UUID, calendarId: String, eventId: String, newStartTime: Date, newEndTime: Date) async throws {
+    func updateEvent(accessToken: String, userProfileId: UUID, calendarId: String, eventId: String, title: String, newStartTime: Date, newEndTime: Date) async throws {
         let url = URL(string: "https://www.googleapis.com/calendar/v3/calendars/\(calendarId)/events/\(eventId)")!
 
         print("Updating event time with URL: \(url)")
@@ -102,6 +126,7 @@ final class GoogleCalendarService {
         dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
 
         let json: [String: Any] = [
+            "title": title,
             "start": ["dateTime": dateFormatter.string(from: newStartTime)],
             "end": ["dateTime": dateFormatter.string(from: newEndTime)]
         ]
@@ -117,6 +142,39 @@ final class GoogleCalendarService {
             let errorData = String(bytes: data, encoding: .utf8) ?? "Unknown error"
             print("Failed to update event time: \(errorData)")
             throw NSError(domain: "UpdateEventTimeError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Failed to update event time: \(errorData)"])
+        }
+    }
+    
+    func createEvent(accessToken: String, userProfileId: UUID, calendarId: String, title: String, startTime: Date, endTime: Date) async throws {
+        let url = URL(string: "https://www.googleapis.com/calendar/v3/calendars/\(calendarId)/events")!
+
+        print("Creating new event with URL: \(url)")
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let dateFormatter = ISO8601DateFormatter()
+        dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+
+        let json: [String: Any] = [
+            "summary": title,
+            "start": ["dateTime": dateFormatter.string(from: startTime)],
+            "end": ["dateTime": dateFormatter.string(from: endTime)]
+        ]
+        
+        let jsonData = try JSONSerialization.data(withJSONObject: json)
+        request.httpBody = jsonData
+
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+            print("Event successfully created")
+        } else {
+            let errorData = String(bytes: data, encoding: .utf8) ?? "Unknown error"
+            print("Failed to create event: \(errorData)")
+            throw NSError(domain: "CreateEventError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Failed to create event: \(errorData)"])
         }
     }
 }

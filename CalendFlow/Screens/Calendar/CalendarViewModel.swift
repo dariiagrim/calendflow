@@ -43,7 +43,7 @@ class CalendarViewModel: ObservableObject {
     }
 
     func chatbotAction() {
-        navigationDelegate?.openChatBot()
+        navigationDelegate?.openChatBot(todayEvents: events, selectedCalendars: selectedCalendars, eventId: nil)
     }
 
     func eventClickAction(event: Event) {
@@ -72,6 +72,14 @@ class CalendarViewModel: ObservableObject {
                 await MainActor.run {
                     events.append(contentsOf: newEvents)
                 }
+                
+                let jsonEvents = events.map { event in
+                    JSONEvent(id: event.id, title: event.title, startTime: event.startTime, endTime: event.endTime)
+                }
+                
+                let jsonData = try JSONEncoder().encode(jsonEvents)
+                let jsonString = String(data: jsonData, encoding: .utf8)!
+                print(jsonString)
             }
         }
     }
@@ -83,7 +91,7 @@ class CalendarViewModel: ObservableObject {
     }
 
     private func handleEditEvent(_ event: Event) {
-        navigationDelegate?.openChatBot() // TODO: pass event
+        navigationDelegate?.openChatBot(todayEvents: events, selectedCalendars: selectedCalendars, eventId: event.id)
     }
 
     private func handleStartEvent(_ event: Event) {
@@ -96,6 +104,6 @@ class CalendarViewModel: ObservableObject {
 protocol CalendarNavigationDelegate: AnyObject {
     func done()
     func openManageCalendars(selectedCalendars: [GoogleCalendar], completion: @escaping ([GoogleCalendar]) -> Void)
-    func openChatBot()
+    func openChatBot(todayEvents: [Event], selectedCalendars: [GoogleCalendar], eventId: String?)
     func openEventDetails(event: Event, completion: @escaping (EventDetailsCoordinator.Result) -> Void)
 }

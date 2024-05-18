@@ -40,21 +40,6 @@ struct CalendarView: View {
             .padding(.horizontal, 20)
         }
         .background(Color.background)
-//        .sheet(isPresented: $showingEventSheet, onDismiss: {
-//            clickedEvent = nil  // Reset the clicked event after closing the sheet
-//        }) {
-//            if let event = clickedEvent {
-//                CalendarExpandedEventView(
-//                    event: event,
-//                    date: viewModel.selectedDate,
-//                    events: $viewModel.events,
-//                    shouldShowChatbotView: $shouldShowChatbotView
-//                )
-//                .padding(.top, 50)
-//                .presentationDetents([.fraction(0.4)])
-//                .presentationDragIndicator(.visible)
-//            }
-//        }
     }
 }
 

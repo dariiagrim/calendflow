@@ -28,7 +28,7 @@ struct EventDetailsView: View {
                         Text("\(viewModel.event.title)")
                             .font(.title2)
                             .bold()
-                        Text(dateFormatter.string(from: viewModel.event.date))
+                        Text(dateFormatter.string(from: viewModel.event.startTime))
                             .font(.subheadline)
                         Text(viewModel.getFormattedTime())
                             .bold()
@@ -83,7 +83,8 @@ struct EventDetailsView: View {
             endTimeMinutes: 40,
             calendarId: "1",
             userProfileId: UUID(),
-            date: Date()
+            startTime: Date(),
+            endTime: Date()
         ),
         navigationDelegate: nil
     )

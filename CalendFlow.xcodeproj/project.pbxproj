@@ -39,6 +39,11 @@
 		94A885532BF2238800ECFA0D /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A885522BF2238800ECFA0D /* ScheduleView.swift */; };
 		94A885552BF2239600ECFA0D /* ScheduleView+Intersections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A885542BF2239600ECFA0D /* ScheduleView+Intersections.swift */; };
 		94A885572BF22CF300ECFA0D /* ScheduleTimeBlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A885562BF22CF300ECFA0D /* ScheduleTimeBlockView.swift */; };
+		94EE10002BF6995300711FD6 /* ChatbotMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94EE0FFF2BF6995300711FD6 /* ChatbotMessageView.swift */; };
+		94EE10022BF69F7B00711FD6 /* ChatbotMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94EE10012BF69F7B00711FD6 /* ChatbotMessage.swift */; };
+		94EE10052BF7EF7700711FD6 /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 94EE10042BF7EF7700711FD6 /* OpenAI */; };
+		94EE10072BF8BE9F00711FD6 /* ChatbotService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94EE10062BF8BE9F00711FD6 /* ChatbotService.swift */; };
+		94EE10092BF8BF9200711FD6 /* ChatbotReply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94EE10082BF8BF9200711FD6 /* ChatbotReply.swift */; };
 		E28D75912BF54EF000FB708C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28D75902BF54EF000FB708C /* AppDelegate.swift */; };
 		E28D75952BF54F4A00FB708C /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28D75942BF54F4A00FB708C /* AppViewModel.swift */; };
 		E28D75972BF54F8E00FB708C /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28D75962BF54F8E00FB708C /* AppCoordinator.swift */; };
@@ -89,6 +94,10 @@
 		94A885522BF2238800ECFA0D /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
 		94A885542BF2239600ECFA0D /* ScheduleView+Intersections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScheduleView+Intersections.swift"; sourceTree = "<group>"; };
 		94A885562BF22CF300ECFA0D /* ScheduleTimeBlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTimeBlockView.swift; sourceTree = "<group>"; };
+		94EE0FFF2BF6995300711FD6 /* ChatbotMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatbotMessageView.swift; sourceTree = "<group>"; };
+		94EE10012BF69F7B00711FD6 /* ChatbotMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatbotMessage.swift; sourceTree = "<group>"; };
+		94EE10062BF8BE9F00711FD6 /* ChatbotService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatbotService.swift; sourceTree = "<group>"; };
+		94EE10082BF8BF9200711FD6 /* ChatbotReply.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatbotReply.swift; sourceTree = "<group>"; };
 		E28D75902BF54EF000FB708C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E28D75942BF54F4A00FB708C /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 		E28D75962BF54F8E00FB708C /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
@@ -112,6 +121,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				949E25E42BEFC32800406B08 /* GoogleSignIn in Frameworks */,
+				94EE10052BF7EF7700711FD6 /* OpenAI in Frameworks */,
 				949E25E62BEFC32800406B08 /* GoogleSignInSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -134,6 +144,7 @@
 		943D98AC2BF3D96400EB62DD /* Chatbot */ = {
 			isa = PBXGroup;
 			children = (
+				94EE0FFE2BF698E000711FD6 /* Views */,
 				943D98AD2BF3D98C00EB62DD /* ChatbotView.swift */,
 				943D98AF2BF3D99B00EB62DD /* ChatbotViewModel.swift */,
 				E28D75CD2BF56DE000FB708C /* ChatbotCoordinator.swift */,
@@ -230,6 +241,8 @@
 			children = (
 				949E25F72BEFDAEC00406B08 /* GoogleCalendar.swift */,
 				943C39722BF2339E00DB0F7F /* Event.swift */,
+				94EE10012BF69F7B00711FD6 /* ChatbotMessage.swift */,
+				94EE10082BF8BF9200711FD6 /* ChatbotReply.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -239,6 +252,7 @@
 			children = (
 				949E25FB2BEFDFC500406B08 /* GoogleCalendarService.swift */,
 				E28D75982BF54FE900FB708C /* Coordinator.swift */,
+				94EE10062BF8BE9F00711FD6 /* ChatbotService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -265,6 +279,14 @@
 				943C39702BF2331A00DB0F7F /* ScheduleEventView.swift */,
 			);
 			path = Schedule;
+			sourceTree = "<group>";
+		};
+		94EE0FFE2BF698E000711FD6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				94EE0FFF2BF6995300711FD6 /* ChatbotMessageView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		E28D75922BF54F2400FB708C /* App */ = {
@@ -351,6 +373,7 @@
 			packageProductDependencies = (
 				949E25E32BEFC32800406B08 /* GoogleSignIn */,
 				949E25E52BEFC32800406B08 /* GoogleSignInSwift */,
+				94EE10042BF7EF7700711FD6 /* OpenAI */,
 			);
 			productName = CalendFlow;
 			productReference = 949E25C62BEF9D2C00406B08 /* CalendFlow.app */;
@@ -383,6 +406,7 @@
 			packageReferences = (
 				949E25E22BEFC32800406B08 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				949E25EB2BEFCBB600406B08 /* XCRemoteSwiftPackageReference "google-api-objectivec-client-for-rest" */,
+				94EE10032BF7EF7700711FD6 /* XCRemoteSwiftPackageReference "OpenAI" */,
 			);
 			productRefGroup = 949E25C72BEF9D2C00406B08 /* Products */;
 			projectDirPath = "";
@@ -425,12 +449,14 @@
 				943C39712BF2331A00DB0F7F /* ScheduleEventView.swift in Sources */,
 				E28D75BB2BF553AE00FB708C /* MainCoordinator.swift in Sources */,
 				E28D75C52BF55AA400FB708C /* CalendarViewController.swift in Sources */,
+				94EE10072BF8BE9F00711FD6 /* ChatbotService.swift in Sources */,
 				E28D75BF2BF5564C00FB708C /* UIViewController.swift in Sources */,
 				943C39792BF33B7900DB0F7F /* CalendarSelectedDateView.swift in Sources */,
 				943C39802BF34E6200DB0F7F /* ManageCalendarsView.swift in Sources */,
 				94A885532BF2238800ECFA0D /* ScheduleView.swift in Sources */,
 				E28D75912BF54EF000FB708C /* AppDelegate.swift in Sources */,
 				94A885452BF1EEC400ECFA0D /* ConnectGoogleCalendarView.swift in Sources */,
+				94EE10092BF8BF9200711FD6 /* ChatbotReply.swift in Sources */,
 				949E25EA2BEFC8B200406B08 /* UIApplication+.swift in Sources */,
 				949E25EE2BEFCECF00406B08 /* TokenStorage.swift in Sources */,
 				94A885572BF22CF300ECFA0D /* ScheduleTimeBlockView.swift in Sources */,
@@ -438,6 +464,8 @@
 				943C39822BF3517500DB0F7F /* ManageCalendarsCalendarBlockView.swift in Sources */,
 				E28D75CE2BF56DE000FB708C /* ChatbotCoordinator.swift in Sources */,
 				949E25F82BEFDAEC00406B08 /* GoogleCalendar.swift in Sources */,
+				94EE10022BF69F7B00711FD6 /* ChatbotMessage.swift in Sources */,
+				94EE10002BF6995300711FD6 /* ChatbotMessageView.swift in Sources */,
 				943C39752BF2367900DB0F7F /* Color.swift in Sources */,
 				949E25F52BEFD6EA00406B08 /* CalendarViewModel.swift in Sources */,
 				943C39862BF36C1C00DB0F7F /* ManageCalendarsViewModel.swift in Sources */,
@@ -676,6 +704,14 @@
 				kind = branch;
 			};
 		};
+		94EE10032BF7EF7700711FD6 /* XCRemoteSwiftPackageReference "OpenAI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MacPaw/OpenAI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.9;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -688,6 +724,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 949E25E22BEFC32800406B08 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignInSwift;
+		};
+		94EE10042BF7EF7700711FD6 /* OpenAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 94EE10032BF7EF7700711FD6 /* XCRemoteSwiftPackageReference "OpenAI" */;
+			productName = OpenAI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
