@@ -13,7 +13,7 @@ struct MainView: View {
     var body: some View {
         Group {
             if let isSignedIn = viewModel.isSignedIn, !isSignedIn {
-                SignInView(signInAction: viewModel.signInAction)
+              SignInView(signInAction: viewModel.signInAction)
             } else {
                 ProgressView().progressViewStyle(.circular)
             }

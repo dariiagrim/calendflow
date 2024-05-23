@@ -52,4 +52,10 @@ extension CalendarCoordinator: CalendarNavigationDelegate {
         let coordinator = EventDetailsCoordinator(event: event, parentViewController: rootViewController)
         coordinate(to: coordinator, completion: completion)
     }
+    
+    func openFocus(event: Event) {
+        guard let navigationController = rootViewController.navigationController else { return }
+        let coordinator = FocusCoordinator(event: event, navigationController: navigationController)
+        coordinate(to: coordinator)
+    }
 }

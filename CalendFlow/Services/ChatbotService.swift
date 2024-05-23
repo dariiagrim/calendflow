@@ -9,7 +9,8 @@ import Foundation
 
 final class ChatbotService {
     func generateChatbotReply(selectedCalendars: [GoogleCalendar], todayEvents: [Event], previousMessages: [ChatbotMessage]) async throws -> ChatbotReply {
-        let url = URL(string: "https://europe-west1-calendflow.cloudfunctions.net/chatbot-reply")!
+          let url = URL(string: "https://europe-west1-calendflow.cloudfunctions.net/chatbot-reply")!
+//        let url = URL(string: "http://localhost:8080/GenerateReply")!
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -28,7 +29,7 @@ final class ChatbotService {
         }
         let dtoCalendars = selectedCalendars.map { DtoChatbotCalendarData(calendarId: $0.id, calendarSummary: $0.summary) }
         
-        let requestBody = DtoChatbotGenerateReplyRequest(messages: messages, todayEventsData: todayEventsData, calendarsData: dtoCalendars)
+        let requestBody = DtoChatbotGenerateReplyRequest(messages: messages, todayEventsData: todayEventsData, calendarsData: dtoCalendars, hoursFromUTC: hoursFromUTC)
         
         
         let encoder = JSONEncoder()
@@ -37,10 +38,20 @@ final class ChatbotService {
         let jsonData = try! encoder.encode(requestBody)
         request.httpBody = jsonData
         
+        if let string = String(data: jsonData, encoding: .utf8) {
+            print(string)
+        } else {
+            print("Failed to convert data to string")
+        }
         let (data, _) = try await URLSession.shared.data(for: request)
         
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
+        if let string = String(data: data, encoding: .utf8) {
+            print(string)
+        } else {
+            print("Failed to convert data to string")
+        }
         
         let response = try decoder.decode(DtoChatbotGenerateReplyResponse.self, from: data)
         
@@ -76,16 +87,8 @@ final class ChatbotService {
                 eventParams: ChatbotEventParams(
                     id: response.id,
                     title: response.title!,
-                    startTime: response.startTime!.addingTimeInterval(
-                        Double(
-                            -secondsFromGMT
-                        )
-                    ),
-                    endTime: response.endTime!.addingTimeInterval(
-                        Double(
-                            -secondsFromGMT
-                        )
-                    ),
+                    startTime: response.startTime!,
+                    endTime: response.endTime!,
                     calendarId: response.calendarId!,
                     userProfileId: response.userProfileId!
                 )
@@ -106,16 +109,8 @@ final class ChatbotService {
                 eventParams: ChatbotEventParams(
                     id: nil,
                     title: response.title!,
-                    startTime: response.startTime!.addingTimeInterval(
-                        Double(
-                            -secondsFromGMT
-                        )
-                    ),
-                    endTime: response.endTime!.addingTimeInterval(
-                        Double(
-                            -secondsFromGMT
-                        )
-                    ),
+                    startTime: response.startTime!,
+                    endTime: response.endTime!,
                     calendarId: response.calendarId!,
                     userProfileId: response.userProfileId!
                 )
@@ -127,7 +122,7 @@ final class ChatbotService {
     
 }
 
-var secondsFromGMT: Int { return TimeZone.current.secondsFromGMT() }
+var hoursFromUTC: Int { return TimeZone.current.secondsFromGMT() / 60 / 60 }
 
 struct DtoChatbotMessage: Codable {
     var content: String
@@ -152,6 +147,7 @@ struct DtoChatbotGenerateReplyRequest: Codable {
     var messages: [DtoChatbotMessage]
     var todayEventsData: [DtoChatbotEventData]
     var calendarsData: [DtoChatbotCalendarData]
+    var hoursFromUTC: Int
 }
 
 

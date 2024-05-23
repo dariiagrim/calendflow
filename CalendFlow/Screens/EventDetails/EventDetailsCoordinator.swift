@@ -46,6 +46,7 @@ extension EventDetailsCoordinator {
         case delete
         case edit
         case start(Event)
+        case focus(Event)
         case idle
     }
 }

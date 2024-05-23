@@ -22,7 +22,7 @@ class EventDetailsViewModel: ObservableObject {
         navigationDelegate?.done()
     }
 
-    func startEventNow() {
+func startEventNow() {
         let newStartTime = Date()
         let newEndTime = Calendar.current.date(byAdding: .minute, value: event.durationInMinutes, to: newStartTime)!
 
@@ -47,6 +47,10 @@ class EventDetailsViewModel: ObservableObject {
                 navigationDelegate?.close(result: .start(newEvent))
             }
         }
+    }
+    
+    func focusOnEvent() {
+        navigationDelegate?.close(result: .focus(event))
     }
 
     func editAction() {

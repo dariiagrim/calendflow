@@ -19,6 +19,10 @@
 		943D98AB2BF3B78800EB62DD /* EventDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943D98AA2BF3B78800EB62DD /* EventDetailsViewModel.swift */; };
 		943D98AE2BF3D98C00EB62DD /* ChatbotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943D98AD2BF3D98C00EB62DD /* ChatbotView.swift */; };
 		943D98B02BF3D99B00EB62DD /* ChatbotViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943D98AF2BF3D99B00EB62DD /* ChatbotViewModel.swift */; };
+		9497CF8B2BFFABBB008B1C8A /* FocusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9497CF8A2BFFABBB008B1C8A /* FocusView.swift */; };
+		9497CF8D2BFFABC8008B1C8A /* FocusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9497CF8C2BFFABC8008B1C8A /* FocusViewModel.swift */; };
+		9497CF8F2BFFABDD008B1C8A /* FocusCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9497CF8E2BFFABDD008B1C8A /* FocusCoordinator.swift */; };
+		9497CF922BFFABFC008B1C8A /* FocusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9497CF912BFFABFC008B1C8A /* FocusViewController.swift */; };
 		949E25CE2BEF9D2D00406B08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 949E25CD2BEF9D2D00406B08 /* Assets.xcassets */; };
 		949E25D12BEF9D2D00406B08 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 949E25D02BEF9D2D00406B08 /* Preview Assets.xcassets */; };
 		949E25D82BEF9D7600406B08 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949E25D72BEF9D7600406B08 /* MainView.swift */; };
@@ -74,6 +78,10 @@
 		943D98AA2BF3B78800EB62DD /* EventDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsViewModel.swift; sourceTree = "<group>"; };
 		943D98AD2BF3D98C00EB62DD /* ChatbotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatbotView.swift; sourceTree = "<group>"; };
 		943D98AF2BF3D99B00EB62DD /* ChatbotViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatbotViewModel.swift; sourceTree = "<group>"; };
+		9497CF8A2BFFABBB008B1C8A /* FocusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusView.swift; sourceTree = "<group>"; };
+		9497CF8C2BFFABC8008B1C8A /* FocusViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusViewModel.swift; sourceTree = "<group>"; };
+		9497CF8E2BFFABDD008B1C8A /* FocusCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCoordinator.swift; sourceTree = "<group>"; };
+		9497CF912BFFABFC008B1C8A /* FocusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusViewController.swift; sourceTree = "<group>"; };
 		949E25C62BEF9D2C00406B08 /* CalendFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CalendFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		949E25CD2BEF9D2D00406B08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		949E25D02BEF9D2D00406B08 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -151,6 +159,17 @@
 				E28D75CB2BF56DD700FB708C /* ChatbotViewController.swift */,
 			);
 			path = Chatbot;
+			sourceTree = "<group>";
+		};
+		9497CF892BFFAB92008B1C8A /* Focus */ = {
+			isa = PBXGroup;
+			children = (
+				9497CF8A2BFFABBB008B1C8A /* FocusView.swift */,
+				9497CF8C2BFFABC8008B1C8A /* FocusViewModel.swift */,
+				9497CF8E2BFFABDD008B1C8A /* FocusCoordinator.swift */,
+				9497CF912BFFABFC008B1C8A /* FocusViewController.swift */,
+			);
+			path = Focus;
 			sourceTree = "<group>";
 		};
 		949E25BD2BEF9D2C00406B08 = {
@@ -260,6 +279,7 @@
 		94A885422BF1EE2700ECFA0D /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				9497CF892BFFAB92008B1C8A /* Focus */,
 				E28D75922BF54F2400FB708C /* App */,
 				949E25D92BEF9D9100406B08 /* Main */,
 				949E25EF2BEFD69B00406B08 /* Calendar */,
@@ -439,7 +459,9 @@
 				E28D75C82BF5625200FB708C /* ManageCalendarsCoordinator.swift in Sources */,
 				94A8854D2BF20A2E00ECFA0D /* WeekDayView.swift in Sources */,
 				E28D75D22BF574A900FB708C /* EventDetailsCoordinator.swift in Sources */,
+				9497CF8B2BFFABBB008B1C8A /* FocusView.swift in Sources */,
 				E28D75C32BF55A9B00FB708C /* CalendarCoordinator.swift in Sources */,
+				9497CF922BFFABFC008B1C8A /* FocusViewController.swift in Sources */,
 				E28D75952BF54F4A00FB708C /* AppViewModel.swift in Sources */,
 				943D98AB2BF3B78800EB62DD /* EventDetailsViewModel.swift in Sources */,
 				E28D75CA2BF5625800FB708C /* ManageCalendarsViewController.swift in Sources */,
@@ -447,6 +469,7 @@
 				E28D75992BF54FE900FB708C /* Coordinator.swift in Sources */,
 				94A885482BF2085400ECFA0D /* WeekView.swift in Sources */,
 				943C39712BF2331A00DB0F7F /* ScheduleEventView.swift in Sources */,
+				9497CF8D2BFFABC8008B1C8A /* FocusViewModel.swift in Sources */,
 				E28D75BB2BF553AE00FB708C /* MainCoordinator.swift in Sources */,
 				E28D75C52BF55AA400FB708C /* CalendarViewController.swift in Sources */,
 				94EE10072BF8BE9F00711FD6 /* ChatbotService.swift in Sources */,
@@ -461,6 +484,7 @@
 				949E25EE2BEFCECF00406B08 /* TokenStorage.swift in Sources */,
 				94A885572BF22CF300ECFA0D /* ScheduleTimeBlockView.swift in Sources */,
 				94A885552BF2239600ECFA0D /* ScheduleView+Intersections.swift in Sources */,
+				9497CF8F2BFFABDD008B1C8A /* FocusCoordinator.swift in Sources */,
 				943C39822BF3517500DB0F7F /* ManageCalendarsCalendarBlockView.swift in Sources */,
 				E28D75CE2BF56DE000FB708C /* ChatbotCoordinator.swift in Sources */,
 				949E25F82BEFDAEC00406B08 /* GoogleCalendar.swift in Sources */,

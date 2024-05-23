@@ -52,6 +52,7 @@ class CalendarViewModel: ObservableObject {
             case .edit: self?.handleEditEvent(event)
             case .start(let event): self?.handleStartEvent(event)
             case .delete: self?.handleEventDelete(event)
+            case.focus: self?.handleFocusEvent(event)
             case .idle: break
             }
         }
@@ -93,6 +94,10 @@ class CalendarViewModel: ObservableObject {
     private func handleEditEvent(_ event: Event) {
         navigationDelegate?.openChatBot(todayEvents: events, selectedCalendars: selectedCalendars, eventId: event.id)
     }
+    
+    private func handleFocusEvent(_ event: Event) {
+        navigationDelegate?.openFocus(event: event)
+    }
 
     private func handleStartEvent(_ event: Event) {
         if let index = events.firstIndex(where: { $0.id == event.id }) {
@@ -105,5 +110,6 @@ protocol CalendarNavigationDelegate: AnyObject {
     func done()
     func openManageCalendars(selectedCalendars: [GoogleCalendar], completion: @escaping ([GoogleCalendar]) -> Void)
     func openChatBot(todayEvents: [Event], selectedCalendars: [GoogleCalendar], eventId: String?)
+    func openFocus(event: Event)
     func openEventDetails(event: Event, completion: @escaping (EventDetailsCoordinator.Result) -> Void)
 }

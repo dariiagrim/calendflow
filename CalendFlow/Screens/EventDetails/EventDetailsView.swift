@@ -48,14 +48,16 @@ struct EventDetailsView: View {
 
                 Spacer()
 
-                Button( action: {
-                    viewModel.startEventNow()
-                }) {
-                    Image(systemName: "play.fill")
-                        .resizable()
-                        .frame(width: 35, height: 35)
-                        .foregroundColor(Color.dark1)
-                }
+                Image(systemName: "play.fill")
+                    .resizable()
+                    .frame(width: 35, height: 35)
+                    .foregroundColor(Color.dark1)
+                    .onTapGesture {
+                        viewModel.startEventNow()
+                    }
+                    .onLongPressGesture(minimumDuration: 2) {
+                        viewModel.focusOnEvent()
+                    }
 
                 Spacer()
 
