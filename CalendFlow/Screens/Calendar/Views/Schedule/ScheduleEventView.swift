@@ -44,6 +44,9 @@ struct ScheduleEventView: View {
     }
     
     func getHeight() -> CGFloat {
+        if event.startTimeInMinutes > event.endTimeInMinutes {
+            return CGFloat(24*60 - event.startTimeInMinutes)
+        }
         return CGFloat(event.endTimeInMinutes - event.startTimeInMinutes)
     }
 }

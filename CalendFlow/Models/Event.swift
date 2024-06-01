@@ -74,8 +74,10 @@ struct Event: Equatable{
     }
     
     func intersects(with event: Event) -> Bool {
-        let range = (startTimeInMinutes+1)...(endTimeInMinutes-1)
-        let otherRange = (event.startTimeInMinutes+1)...(event.endTimeInMinutes-1)
+        let startRange = min(startTimeInMinutes, endTimeInMinutes)
+        let endRange = max(startTimeInMinutes, endTimeInMinutes)
+        let range = (startRange+1)...(endRange-1)
+        let otherRange = (startRange+1)...(endRange-1)
         return range.contains(event.startTimeInMinutes) ||
         range.contains(event.endTimeInMinutes) ||
         otherRange.contains(startTimeInMinutes) ||
