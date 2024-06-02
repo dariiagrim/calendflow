@@ -14,8 +14,8 @@ final class ChatbotService {
         selectedEvent: Event?,
         previousMessages: [ChatbotMessage]
     ) async throws -> ChatbotReply {
-        //          let url = URL(string: "https://europe-west1-calendflow.cloudfunctions.net/chatbot-reply")!
-        let url = URL(string: "http://localhost:8080/GenerateReply")!
+                  let url = URL(string: "https://europe-west1-calendflow.cloudfunctions.net/chatbot-reply")!
+//        let url = URL(string: "http://localhost:8080/GenerateReply")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")

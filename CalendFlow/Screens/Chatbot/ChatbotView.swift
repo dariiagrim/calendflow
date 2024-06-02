@@ -58,7 +58,7 @@ struct ChatbotView: View {
 }
 
 #Preview {
-    let viewModel = ChatbotViewModel(todayEvents: [], selectedCalendars: [], selectedEvent: nil, navigationDelegate: nil)
+    let viewModel = ChatbotViewModel(selectedCalendars: [], selectedEvent: nil, navigationDelegate: nil)
     viewModel.sendChatbotMessage(messageText: "Hello")
     viewModel.sendCustomerMessage(messageText: "Hello")
     viewModel.sendChatbotMessage(messageText: "Hellokdfkfkfkfkfkd")

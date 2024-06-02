@@ -22,5 +22,6 @@ final class ChatbotViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         add(ChatbotView(viewModel: viewModel), to: view)
+        viewModel.viewDidLoad()
     }
 }

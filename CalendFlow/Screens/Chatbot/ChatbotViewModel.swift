@@ -13,7 +13,6 @@ final class ChatbotViewModel: ObservableObject {
     
     private weak var navigationDelegate: ChatbotNavigationDelegate?
     
-    private let todayEvents: [Event] // TODO: fix to all events
     private let selectedCalendars: [GoogleCalendar]
     private let selectedEvent: Event?
     
@@ -22,10 +21,10 @@ final class ChatbotViewModel: ObservableObject {
    
     private var chatbotEventParams: ChatbotEventParams?
     private var chatbotResultAction: ChatbotResultAction?
+    private var events  = [Event]()
     
 
-    init(todayEvents: [Event], selectedCalendars: [GoogleCalendar], selectedEvent: Event?, navigationDelegate: ChatbotNavigationDelegate?) {
-        self.todayEvents = todayEvents
+    init(selectedCalendars: [GoogleCalendar], selectedEvent: Event?, navigationDelegate: ChatbotNavigationDelegate?) {
         self.selectedCalendars = selectedCalendars
         self.selectedEvent = selectedEvent
         self.navigationDelegate = navigationDelegate
@@ -34,6 +33,41 @@ final class ChatbotViewModel: ObservableObject {
     deinit {
         navigationDelegate?.done()
     }
+    
+    func viewDidLoad() {
+        fetchEvents()
+    }
+    
+
+    func fetchEvents() {
+        events = []
+        
+        Task {
+            for selectedCalendar in self.selectedCalendars {
+                let accessToken = TokenStorage.shared.getTokenById(id: selectedCalendar.userProfileId)
+                
+                let startDate = Date().addingTimeInterval(-5 * 7 * 24 * 60 * 60)
+                let endDate = Date().addingTimeInterval(5 * 7 * 24 * 60 * 60)
+                
+                do {
+                    let newEvents = try await googleCalendarService.fetchEvents(
+                        accessToken: accessToken,
+                        userProfileId: selectedCalendar.userProfileId,
+                        calendarId: selectedCalendar.id,
+                        startDate: startDate,
+                        endDate: endDate
+                    )
+                    
+                    await MainActor.run {
+                        events.append(contentsOf: newEvents)
+                    }
+                } catch {
+                    print("Failed to fetch events: \(error)")
+                }
+            }
+        }
+    }
+    
     
     func sendCustomerMessage(messageText: String) {
         messages.append(ChatbotMessage(text: messageText, isBotMessage: false))
@@ -51,7 +85,7 @@ final class ChatbotViewModel: ObservableObject {
             do {
                 let chatbotReply = try await chatbotService.generateChatbotReply(
                     selectedCalendars: selectedCalendars,
-                    events: todayEvents,
+                    events: events,
                     selectedEvent: selectedEvent,
                     previousMessages: messages
                 )

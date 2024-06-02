@@ -30,11 +30,11 @@ final class GoogleCalendarService {
         } ?? []
     }
     
-    func fetchEvents(accessToken: String, userProfileId: UUID, calendarId: String, date: Date) async throws -> [Event] {
+    func fetchEvents(accessToken: String, userProfileId: UUID, calendarId: String, startDate: Date, endDate: Date) async throws -> [Event] {
         let dateFormatter = ISO8601DateFormatter()
         
-        let startTime = date.startOfDay
-        let endTime = date.endOfDay
+        let startTime = startDate.startOfDay
+        let endTime = endDate.endOfDay
         
         let url = URL(string: "https://www.googleapis.com/calendar/v3/calendars/\(calendarId)/events?timeMin=\(dateFormatter.string(from: startTime))&timeMax=\(dateFormatter.string(from: endTime))")!
         

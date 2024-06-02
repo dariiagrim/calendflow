@@ -43,7 +43,7 @@ class CalendarViewModel: ObservableObject {
     }
 
     func chatbotAction() {
-        navigationDelegate?.openChatBot(todayEvents: events, selectedCalendars: selectedCalendars, eventId: nil)
+        navigationDelegate?.openChatBot(selectedCalendars: selectedCalendars, eventId: nil)
     }
 
     func eventClickAction(event: Event) {
@@ -69,7 +69,13 @@ class CalendarViewModel: ObservableObject {
             for selectedCalendar in self.selectedCalendars {
                 let accessToken = TokenStorage.shared.getTokenById(id: selectedCalendar.userProfileId)
                 // TODO: safe try
-                let newEvents = try! await calendarService.fetchEvents(accessToken: accessToken, userProfileId: selectedCalendar.userProfileId, calendarId: selectedCalendar.id, date: selectedDate)
+                let newEvents = try! await calendarService.fetchEvents(
+                    accessToken: accessToken,
+                    userProfileId: selectedCalendar.userProfileId,
+                    calendarId: selectedCalendar.id,
+                    startDate: selectedDate,
+                    endDate: selectedDate
+                )
                 await MainActor.run {
                     events.append(contentsOf: newEvents)
                 }
@@ -92,7 +98,7 @@ class CalendarViewModel: ObservableObject {
     }
 
     private func handleEditEvent(_ event: Event) {
-        navigationDelegate?.openChatBot(todayEvents: events, selectedCalendars: selectedCalendars, eventId: event.id)
+        navigationDelegate?.openChatBot(selectedCalendars: selectedCalendars, eventId: event.id)
     }
     
     private func handleFocusEvent(_ event: Event) {
@@ -109,7 +115,7 @@ class CalendarViewModel: ObservableObject {
 protocol CalendarNavigationDelegate: AnyObject {
     func done()
     func openManageCalendars(selectedCalendars: [GoogleCalendar], completion: @escaping ([GoogleCalendar]) -> Void)
-    func openChatBot(todayEvents: [Event], selectedCalendars: [GoogleCalendar], eventId: String?)
+    func openChatBot(selectedCalendars: [GoogleCalendar], eventId: String?)
     func openFocus(event: Event)
     func openEventDetails(event: Event, completion: @escaping (EventDetailsCoordinator.Result) -> Void)
 }
