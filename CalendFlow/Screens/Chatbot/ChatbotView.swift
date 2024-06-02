@@ -22,10 +22,24 @@ struct ChatbotView: View {
                             messageText: message.text
                         )
                     }
+                    if viewModel.isConfirmationForActionNeeded {
+                        HStack {
+                            ConfirmationButtonView(
+                                backgroundColor: Color.light1,
+                                label: "No",
+                                onClickAction: viewModel.declineAction
+                            )
+                            ConfirmationButtonView(
+                                backgroundColor: Color.light2,
+                                label: "Yes",
+                                onClickAction: viewModel.executeAction
+                            )
+                        }
+                        .padding()
+                    }
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            
             TextField("Message", text: $input)
                 .padding()
                 .frame(height: 30)
@@ -38,14 +52,13 @@ struct ChatbotView: View {
                     viewModel.sendCustomerMessage(messageText: input)
                     input = ""
                 }
-            
         }
         .background(Color.background)
     }
 }
 
 #Preview {
-    let viewModel = ChatbotViewModel(todayEvents: [], selectedCalendars: [], eventId: nil, navigationDelegate: nil)
+    let viewModel = ChatbotViewModel(todayEvents: [], selectedCalendars: [], selectedEvent: nil, navigationDelegate: nil)
     viewModel.sendChatbotMessage(messageText: "Hello")
     viewModel.sendCustomerMessage(messageText: "Hello")
     viewModel.sendChatbotMessage(messageText: "Hellokdfkfkfkfkfkd")

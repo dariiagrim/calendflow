@@ -23,7 +23,7 @@ final class ChatbotCoordinator: Coordinator<Void> {
     }
 
     override func start() {
-        let viewModel = ChatbotViewModel(todayEvents: todayEvents, selectedCalendars: selectedCalendars, eventId: eventId, navigationDelegate: self)
+        let viewModel = ChatbotViewModel(todayEvents: todayEvents, selectedCalendars: selectedCalendars, selectedEvent: nil, navigationDelegate: self)
         let viewController = ChatbotViewController(viewModel: viewModel)
         rootViewController = viewController
 

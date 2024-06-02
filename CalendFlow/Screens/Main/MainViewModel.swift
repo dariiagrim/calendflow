@@ -26,8 +26,8 @@ final class MainViewModel: ObservableObject {
             if error != nil {
                 self?.isSignedIn = false
             } else if let user {
-//                self?.signedIn(token: user.accessToken.tokenString)
-                self?.isSignedIn = false
+                self?.signedIn(token: user.accessToken.tokenString)
+//                self?.isSignedIn = false
             }
         }
     }

@@ -9,21 +9,25 @@ import Foundation
 
 final class ChatbotViewModel: ObservableObject {
     @Published private(set) var messages: [ChatbotMessage] = []
+    @Published private(set) var isConfirmationForActionNeeded = false
     
     private weak var navigationDelegate: ChatbotNavigationDelegate?
     
-    private let todayEvents: [Event]
+    private let todayEvents: [Event] // TODO: fix to all events
     private let selectedCalendars: [GoogleCalendar]
-    private let eventId: String?
+    private let selectedEvent: Event?
     
     private let chatbotService = ChatbotService()
     private let googleCalendarService = GoogleCalendarService()
+   
+    private var chatbotEventParams: ChatbotEventParams?
+    private var chatbotResultAction: ChatbotResultAction?
     
 
-    init(todayEvents: [Event], selectedCalendars: [GoogleCalendar], eventId: String?, navigationDelegate: ChatbotNavigationDelegate?) {
+    init(todayEvents: [Event], selectedCalendars: [GoogleCalendar], selectedEvent: Event?, navigationDelegate: ChatbotNavigationDelegate?) {
         self.todayEvents = todayEvents
         self.selectedCalendars = selectedCalendars
-        self.eventId = eventId
+        self.selectedEvent = selectedEvent
         self.navigationDelegate = navigationDelegate
     }
 
@@ -45,7 +49,12 @@ final class ChatbotViewModel: ObservableObject {
             )
 
             do {
-                let chatbotReply = try await chatbotService.generateChatbotReply(selectedCalendars: selectedCalendars, todayEvents: todayEvents, previousMessages: messages)
+                let chatbotReply = try await chatbotService.generateChatbotReply(
+                    selectedCalendars: selectedCalendars,
+                    events: todayEvents,
+                    selectedEvent: selectedEvent,
+                    previousMessages: messages
+                )
                 
                 reply = chatbotReply
             } catch {
@@ -53,42 +62,65 @@ final class ChatbotViewModel: ObservableObject {
             }
             
             await MainActor.run { [reply] in
-                if reply.action == nil {
-                    messages.append(reply.message)
-                }
-                else {
-                    executeAction(action: reply.action!, eventParams: reply.eventParams!)
-                    sendChatbotMessage(messageText: "All is done! Can I do something else for you?")
+                messages.append(reply.message)
+                if reply.action != nil {
+                    chatbotEventParams = reply.eventParams!
+                    chatbotResultAction = reply.action!
+                    isConfirmationForActionNeeded = true
                 }
             }
         }
     }
     
-    func executeAction(action: ChatbotResultAction, eventParams: ChatbotEventParams) {
-        switch action {
+    func executeAction() {
+        isConfirmationForActionNeeded = false
+        
+        switch chatbotResultAction! {
         case .create:
-            createEvent(eventParams: eventParams)
+            createEvent()
         case .edit:
-            editEvent(eventParams: eventParams)
+            editEvent()
         }
+        
+        sendChatbotMessage(messageText: "All is done! Can I do something else for you?")
     }
     
-    func createEvent(eventParams: ChatbotEventParams) {
-        let calendar = selectedCalendars.first(where: { $0.id == eventParams.calendarId })
+    func declineAction() {
+        isConfirmationForActionNeeded = false
+        sendChatbotMessage(messageText: "Please, tell me what you would like to change.")
+    }
+    
+    
+    func createEvent() {
+        let calendar = selectedCalendars.first(where: { $0.id == chatbotEventParams!.calendarId })
         let accessToken = TokenStorage.shared.getTokenById(id: calendar!.userProfileId)
         
         Task {
-            try! await googleCalendarService.createEvent(accessToken: accessToken, userProfileId: calendar!.userProfileId, calendarId: eventParams.calendarId, title: eventParams.title, startTime: eventParams.startTime, endTime: eventParams.endTime)
+            try! await googleCalendarService.createEvent(
+                accessToken: accessToken,
+                userProfileId: calendar!.userProfileId,
+                calendarId: chatbotEventParams!.calendarId,
+                title: chatbotEventParams!.title,
+                startTime: chatbotEventParams!.startTime,
+                endTime: chatbotEventParams!.endTime
+            )
         }
-
     }
     
-    func editEvent(eventParams: ChatbotEventParams) {
-        let calendar = selectedCalendars.first(where: { $0.id == eventParams.calendarId })
+    func editEvent() {
+        let calendar = selectedCalendars.first(where: { $0.id == chatbotEventParams!.calendarId })
         let accessToken = TokenStorage.shared.getTokenById(id: calendar!.userProfileId)
         
         Task {
-            try! await googleCalendarService.updateEvent(accessToken: accessToken, userProfileId: calendar!.userProfileId, calendarId: eventParams.calendarId, eventId: eventParams.id!, title: eventParams.title, newStartTime: eventParams.startTime, newEndTime: eventParams.endTime)
+            try! await googleCalendarService.updateEvent(
+                accessToken: accessToken,
+                userProfileId: calendar!.userProfileId,
+                calendarId: chatbotEventParams!.calendarId,
+                eventId: chatbotEventParams!.id!,
+                title: chatbotEventParams!.title,
+                newStartTime: chatbotEventParams!.startTime,
+                newEndTime: chatbotEventParams!.endTime
+            )
         }
     }
     

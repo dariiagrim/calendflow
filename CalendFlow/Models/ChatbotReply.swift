@@ -19,7 +19,6 @@ struct ChatbotEventParams {
     let startTime: Date
     let endTime: Date
     let calendarId: String
-    let userProfileId: String
 }
 
 enum ChatbotResultAction: String {

@@ -8,29 +8,47 @@
 import Foundation
 
 final class ChatbotService {
-    func generateChatbotReply(selectedCalendars: [GoogleCalendar], todayEvents: [Event], previousMessages: [ChatbotMessage]) async throws -> ChatbotReply {
-          let url = URL(string: "https://europe-west1-calendflow.cloudfunctions.net/chatbot-reply")!
-//        let url = URL(string: "http://localhost:8080/GenerateReply")!
-        
+    func generateChatbotReply(
+        selectedCalendars: [GoogleCalendar],
+        events: [Event],
+        selectedEvent: Event?,
+        previousMessages: [ChatbotMessage]
+    ) async throws -> ChatbotReply {
+        //          let url = URL(string: "https://europe-west1-calendflow.cloudfunctions.net/chatbot-reply")!
+        let url = URL(string: "http://localhost:8080/GenerateReply")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         
-        let messages = previousMessages.map { DtoChatbotMessage(content: $0.text, isBot: $0.isBotMessage) }
-        let todayEventsData = todayEvents.map { DtoChatbotEventData(
-            id: $0.id,
-            calendarId: $0.calendarId,
-            userProfileId: $0.userProfileId.uuidString,
-            title: $0.title,
-            startTime: $0.startTime,
-            endTime: $0.endTime
-        )
+        let dtoMessages = previousMessages.map { DtoChatbotMessage(content: $0.text, isBot: $0.isBotMessage) }
+        let dtoEventsData = events.map {
+            DtoChatbotEventData(
+                id: $0.id,
+                calendarId: $0.calendarId,
+                title: $0.title,
+                startTime: $0.startTime,
+                endTime: $0.endTime
+            )
         }
         let dtoCalendars = selectedCalendars.map { DtoChatbotCalendarData(calendarId: $0.id, calendarSummary: $0.summary) }
+        let dtoSelectedEventData = selectedEvent != nil ?
+        DtoChatbotEventData(
+            id: selectedEvent!.id,
+            calendarId: selectedEvent!.calendarId,
+            title: selectedEvent!.title,
+            startTime: selectedEvent!.startTime,
+            endTime: selectedEvent!.endTime
+        ) : nil
         
-        let requestBody = DtoChatbotGenerateReplyRequest(messages: messages, todayEventsData: todayEventsData, calendarsData: dtoCalendars, hoursFromUTC: hoursFromUTC)
         
+        let requestBody = DtoChatbotGenerateReplyRequest(
+            messages: dtoMessages,
+            eventsData: dtoEventsData,
+            calendarsData: dtoCalendars,
+            selectedEventData: dtoSelectedEventData,
+            currentDate: Date()
+        )
         
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
@@ -38,40 +56,59 @@ final class ChatbotService {
         let jsonData = try! encoder.encode(requestBody)
         request.httpBody = jsonData
         
-        if let string = String(data: jsonData, encoding: .utf8) {
-            print(string)
-        } else {
-            print("Failed to convert data to string")
-        }
+        
         let (data, _) = try await URLSession.shared.data(for: request)
         
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
-        if let string = String(data: data, encoding: .utf8) {
-            print(string)
-        } else {
-            print("Failed to convert data to string")
-        }
         
         let response = try decoder.decode(DtoChatbotGenerateReplyResponse.self, from: data)
         
-        return getChatbotReply(response: response)
+        return getChatbotReply(response: response, selectedCalendars: selectedCalendars, events: events)
     }
     
-    func getChatbotReply(response: DtoChatbotGenerateReplyResponse) -> ChatbotReply {
+    func getChatbotReply(
+        response: DtoChatbotGenerateReplyResponse,
+        selectedCalendars: [GoogleCalendar],
+        events: [Event]
+    ) -> ChatbotReply {
         if response.furtherClarifyingQuestion != nil {
             return ChatbotReply(message: ChatbotMessage(text: response.furtherClarifyingQuestion!, isBotMessage: true), action: nil, eventParams: nil)
         }
         
-        if response.action == nil || response.calendarId == nil || response.calendarSummary == nil || response.startTime == nil || response.endTime == nil || response.userProfileId == nil || response.title == nil || response.actionConfirmed == nil{
-            return ChatbotReply(message: ChatbotMessage(text: "Please provide more information about the event.", isBotMessage: true), action: nil, eventParams: nil)
+        if response.chatbotResponse != nil {
+            return ChatbotReply(message: ChatbotMessage(text: response.chatbotResponse!, isBotMessage: true), action: nil, eventParams: nil)
+        }
+        
+        let requireMoreInformationMessage = ChatbotReply(
+            message: ChatbotMessage(
+                text: "Please provide more information about the event.",
+                isBotMessage: true
+            ),
+            action: nil,
+            eventParams: nil
+        )
+        
+        if response.action == nil {
+            return requireMoreInformationMessage
         }
         
         switch response.action {
         case .edit:
-            if response.id == nil {
-                return ChatbotReply(message: ChatbotMessage(text: "Please provide more information about the event.", isBotMessage: true), action: nil, eventParams: nil)
+            if response.eventId == nil || response.title == nil || response.startTime == nil || response.endTime == nil  {
+                return requireMoreInformationMessage
             }
+            
+            let event = events.first { $0.id == response.eventId }
+            if event == nil {
+                return requireMoreInformationMessage
+            }
+            
+            let calendar = selectedCalendars.first { $0.id == event!.calendarId }
+            if calendar == nil {
+                return requireMoreInformationMessage
+            }
+            
             return ChatbotReply(
                 message: ChatbotMessage(
                     text: """
@@ -79,21 +116,29 @@ final class ChatbotService {
                         New event title: \(response.title!)
                         New event start time: \(response.startTime!)
                         New event end time: \(response.endTime!)
-                        Event from calendar: \(response.calendarSummary!)
+                        Event from calendar: \(calendar!.summary)
                         """,
                     isBotMessage: true
                 ),
-                action: response.actionConfirmed! ? .edit : nil,
+                action: .edit,
                 eventParams: ChatbotEventParams(
-                    id: response.id,
+                    id: response.eventId,
                     title: response.title!,
                     startTime: response.startTime!,
                     endTime: response.endTime!,
-                    calendarId: response.calendarId!,
-                    userProfileId: response.userProfileId!
+                    calendarId: calendar!.id
                 )
             )
         case .create:
+            if response.calendarId == nil || response.title == nil || response.startTime == nil || response.endTime == nil  {
+                return requireMoreInformationMessage
+            }
+            
+            let calendar = selectedCalendars.first { $0.id == response.calendarId! }
+            if calendar == nil {
+                return requireMoreInformationMessage
+            }
+            
             return ChatbotReply(
                 message: ChatbotMessage(
                     text: """
@@ -101,28 +146,33 @@ final class ChatbotService {
                     New event title: \(response.title!)
                     New event start time: \(response.startTime!)
                     New event end time: \(response.endTime!)
-                    Event from calendar: \(response.calendarSummary!)
+                    Event from calendar: \(calendar!.summary)
                     """,
                     isBotMessage: true
                 ),
-                action: response.actionConfirmed! ? .create : nil,
+                action: .create,
                 eventParams: ChatbotEventParams(
                     id: nil,
                     title: response.title!,
                     startTime: response.startTime!,
                     endTime: response.endTime!,
-                    calendarId: response.calendarId!,
-                    userProfileId: response.userProfileId!
+                    calendarId: calendar!.id
                 )
             )
         case .none:
-            return ChatbotReply(message: ChatbotMessage(text: "Please provide more information about the event.", isBotMessage: true), action: nil, eventParams: nil)
+            return requireMoreInformationMessage
         }
     }
     
 }
 
-var hoursFromUTC: Int { return TimeZone.current.secondsFromGMT() / 60 / 60 }
+struct DtoChatbotGenerateReplyRequest: Codable {
+    var messages: [DtoChatbotMessage]
+    var eventsData: [DtoChatbotEventData]
+    var calendarsData: [DtoChatbotCalendarData]
+    var selectedEventData: DtoChatbotEventData?
+    var currentDate: Date
+}
 
 struct DtoChatbotMessage: Codable {
     var content: String
@@ -132,7 +182,6 @@ struct DtoChatbotMessage: Codable {
 struct DtoChatbotEventData: Codable {
     var id: String
     var calendarId: String
-    var userProfileId: String
     var title: String
     var startTime: Date
     var endTime: Date
@@ -143,29 +192,18 @@ struct DtoChatbotCalendarData: Codable {
     var calendarSummary: String
 }
 
-struct DtoChatbotGenerateReplyRequest: Codable {
-    var messages: [DtoChatbotMessage]
-    var todayEventsData: [DtoChatbotEventData]
-    var calendarsData: [DtoChatbotCalendarData]
-    var hoursFromUTC: Int
-}
-
-
-enum DtoChatbotResultAction: String, Codable {
-    case edit
-    case create
-}
-
 struct DtoChatbotGenerateReplyResponse: Codable {
-    var id: String?
+    var eventId: String?
     var calendarId: String?
-    var calendarSummary: String?
-    var userProfileId: String?
     var title: String?
     var startTime: Date?
     var endTime: Date?
     var action: DtoChatbotResultAction?
     var furtherClarifyingQuestion: String?
-    var editFromDate: Date?
-    var actionConfirmed: Bool?
+    var chatbotResponse: String?
+}
+
+enum DtoChatbotResultAction: String, Codable {
+    case edit
+    case create
 }
