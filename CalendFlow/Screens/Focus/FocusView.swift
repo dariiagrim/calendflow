@@ -6,22 +6,57 @@
 //
 
 import SwiftUI
+import Combine
 
 struct FocusView: View {
     @ObservedObject private(set) var viewModel: FocusViewModel
-    
+    @State private var remainingTime: String = ""
+
+    private var timer: Publishers.Autoconnect<Timer.TimerPublisher> {
+        Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    }
     
     var body: some View {
         VStack{
             Text("Focusing on event \(viewModel.event.title)")
                 .font(.title)
-                .bold()
+                .fontWeight(.medium)
                 .multilineTextAlignment(.center)
                 .padding()
-                .foregroundColor(.dark2)
+                .foregroundColor(.primary)
+            ZStack {
+                Image(systemName: "arrow.circlepath")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .padding(.horizontal)
+                    .symbolRenderingMode(.palette)
+                    .foregroundStyle(
+                        Color.light1
+                    )
+                Text(remainingTime)
+                    .font(.largeTitle)
+                    .onReceive(timer) { _ in
+                        updateRemainingTime()
+                    }
+            }
+
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.background)
+    }
+    
+    private func updateRemainingTime() {
+        let currentTime = Date()
+        let endTime = viewModel.event.endTime
+        let timeInterval = endTime.timeIntervalSince(currentTime)
+
+        if timeInterval > 0 {
+            let minutes = Int(timeInterval) / 60
+            let seconds = Int(timeInterval) % 60
+            remainingTime = String(format: "%02d:%02d", minutes, seconds)
+        } else {
+            remainingTime = "00:00"
+        }
     }
 }
 
